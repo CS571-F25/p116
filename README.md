@@ -8,7 +8,6 @@ SmartRecipe is an AI-powered web application that helps users decide what to coo
 - **Recipe Details:** By clicking the recipe card, users can view recipe details including ingredient lists, step-by-step instructions, nutrition facts, and helpful cooking tips.
 - **Save/Favorite Recipes:** Users can save or remove favorite recipes to their personal “Saved Recipes” page and search or filter through their collection.
 - **Preference Modes:** Users can filter recipes by dietary restriction (e.g., vegan, gluten-free), cuisine style (e.g., Asian, Italian), meal type, cooking complexity, and spice level to match their specific needs.
-- **Optional Add-On:** Users may upload a photo of their refrigerator, and AI-powered image recognition identifies visible ingredients automatically, streamlining the input process.
 
 ## 🛠️ Tech Stack
 
