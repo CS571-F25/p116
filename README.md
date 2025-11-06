@@ -1,16 +1,18 @@
-# React + Vite
+# 🧑‍🍳 SmartRecipe: AI-powered Recipe Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SmartRecipe is an AI-powered web application that helps users decide what to cook using the ingredients they already have. By entering a few ingredients, users can instantly generate personalized recipes, view nutritional details, and explore different cooking styles and dietary preferences. For example, if a user inputs “tomato,” “beef,” and “potato”, AI may suggest recipes such as Beef Stew with Tomatoes or Spiced Beef and Potato Hash. The goal is to make cooking more accessible, creative, and efficient, especially for students and busy professionals who often wonder “What should I cook today?”
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Recipe Generation:** Users input their available ingredients, and AI generates three recipe options displayed as interactive cards. Each card features a title, image, brief description, preparation time, difficulty level, calorie count, and relevant dietary tags.
+- **Recipe Details:** By clicking the recipe card, users can view recipe details including ingredient lists, step-by-step instructions, nutrition facts, and helpful cooking tips.
+- **Save/Favorite Recipes:** Users can save or remove favorite recipes to their personal “Saved Recipes” page and search or filter through their collection.
+- **Preference Modes:** Users can filter recipes by dietary restriction (e.g., vegan, gluten-free), cuisine style (e.g., Asian, Italian), meal type, cooking complexity, and spice level to match their specific needs.
+- **Optional Add-On:** Users may upload a photo of their refrigerator, and AI-powered image recognition identifies visible ingredients automatically, streamlining the input process.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** and **React Router** for frontend development and navigation
+- **React Bootstrap** for responsive and accessible UI
+- **OpenAI API** for recipe generation and image recognition
+- **localStorage** for persisting user preferences and saved recipes, with the option for fullstack development with an external database (e.g. Node.js and MongoDB) if time permits.
