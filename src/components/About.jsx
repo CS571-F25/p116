@@ -2,22 +2,29 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 
 export default function About() {
   return (
-    <Container className="mt-4">
+    <Container className="mt-5">
       <Row>
         <Col md={10} className="mx-auto">
-          <h1 className="display-4 mb-4 text-center">About SmartRecipe</h1>
+          <div className="text-center mb-5">
+            <h1 className="hero-title display-3 mb-3">About SmartRecipe</h1>
+            <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
+              Your AI-powered cooking companion 🍳
+            </p>
+          </div>
 
-          <Card className="mb-4 shadow-sm">
-            <Card.Body className="p-4">
-              <Card.Title className="h4 mb-3">What is SmartRecipe?</Card.Title>
-              <Card.Text>
+          <Card className="mb-5">
+            <Card.Body className="p-5">
+              <Card.Title className="h4 mb-4" style={{ color: "var(--color-primary)" }}>
+                What is SmartRecipe?
+              </Card.Title>
+              <Card.Text style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "var(--color-warm-brown)" }}>
                 Tired of staring at your fridge wondering what to make?
                 SmartRecipe is your AI-powered cooking companion that turns
                 those random ingredients in your kitchen into delicious meal
                 ideas! Just tell us what you have, and we'll instantly whip up
                 personalized recipe suggestions tailored to your taste buds.
               </Card.Text>
-              <Card.Text>
+              <Card.Text style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "var(--color-warm-brown)" }}>
                 Got a tomato, some beef, and a potato? We might suggest a cozy
                 Beef Stew with Tomatoes or a flavorful Spiced Beef and Potato
                 Hash! Whether you're a busy student trying to make the most of
@@ -30,25 +37,35 @@ export default function About() {
 
           <Row>
             <Col md={6} className="mb-4">
-              <Card className="h-100 shadow-sm">
-                <Card.Body>
-                  <Card.Title className="h5">✨ Features</Card.Title>
-                  <ul className="mb-0">
-                    <li>
-                      <strong>Recipe Generation:</strong> AI-powered recipe
-                      suggestions based on your ingredients
+              <Card className="h-100 recipe-card">
+                <Card.Body className="p-4">
+                  <Card.Title className="h5 mb-4" style={{ color: "var(--color-primary)" }}>
+                    ✨ Features
+                  </Card.Title>
+                  <ul className="mb-0" style={{ paddingLeft: "1.25rem" }}>
+                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>Recipe Generation:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        AI-powered recipe suggestions based on your ingredients
+                      </span>
                     </li>
-                    <li>
-                      <strong>Recipe Details:</strong> View ingredient lists,
-                      step-by-step instructions, and nutrition facts
+                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>Recipe Details:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        View ingredient lists, step-by-step instructions, and nutrition facts
+                      </span>
                     </li>
-                    <li>
-                      <strong>Save/Favorite:</strong> Save your favorite recipes
-                      for later
+                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>Save/Favorite:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        Save your favorite recipes for later
+                      </span>
                     </li>
-                    <li>
-                      <strong>Preference Modes:</strong> Filter by dietary
-                      restrictions, cuisine style, and more
+                    <li style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>Preference Modes:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        Filter by dietary restrictions, cuisine style, and more
+                      </span>
                     </li>
                   </ul>
                 </Card.Body>
@@ -56,18 +73,29 @@ export default function About() {
             </Col>
 
             <Col md={6} className="mb-4">
-              <Card className="h-100 shadow-sm">
-                <Card.Body>
-                  <Card.Title className="h5">🛠️ Tech Stack</Card.Title>
-                  <ul className="mb-0">
-                    <li>
-                      <strong>Frontend:</strong> React, React Router, Vite
+              <Card className="h-100 recipe-card">
+                <Card.Body className="p-4">
+                  <Card.Title className="h5 mb-4" style={{ color: "var(--color-primary)" }}>
+                    🛠️ Tech Stack
+                  </Card.Title>
+                  <ul className="mb-0" style={{ paddingLeft: "1.25rem" }}>
+                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>Frontend:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        React, React Router, Vite
+                      </span>
                     </li>
-                    <li>
-                      <strong>UI library:</strong> React Bootstrap
+                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>UI library:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        React Bootstrap
+                      </span>
                     </li>
-                    <li>
-                      <strong>AI:</strong> OpenAI API for recipe generation
+                    <li style={{ lineHeight: "1.7" }}>
+                      <strong style={{ color: "var(--color-warm-brown)" }}>AI:</strong>{" "}
+                      <span style={{ color: "var(--color-warm-brown)" }}>
+                        OpenAI API for recipe generation
+                      </span>
                     </li>
                   </ul>
                 </Card.Body>

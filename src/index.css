@@ -2,20 +2,42 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Warm & Appetizing Color Palette */
+  --color-primary: #FF6B35;
+  --color-primary-light: #FF8C42;
+  --color-primary-dark: #E55A2B;
+  --color-secondary: #F7931E;
+  --color-accent: #FFB627;
+  --color-warm-red: #E63946;
+  --color-golden: #FFC857;
+  --color-warm-brown: #5C4033;
+  --color-warm-brown-light: #8B6F47;
+  --color-cream: #FFF8F0;
+  --color-cream-dark: #FDF5E6;
+  --color-warm-gray: #6B5B73;
+  --color-success: #6B8E23;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  --gradient-warm: linear-gradient(135deg, #FF8C42 0%, #FFB627 100%);
+  --gradient-soft: linear-gradient(135deg, #FFF8F0 0%, #FDF5E6 100%);
+  --gradient-hero: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 147, 30, 0.1) 100%);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background: var(--gradient-soft);
+  color: var(--color-warm-brown);
 }
 
 * {

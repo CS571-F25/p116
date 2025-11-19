@@ -1,23 +1,43 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
+import "./Navigation.css";
 
 export default function Navigation() {
+  const location = useLocation();
+
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+    <Navbar expand="lg" className="custom-navbar" variant="light">
       <Container>
-        <Navbar.Brand as={Link} to="/">
-          🧑‍🍳 SmartRecipe
+        <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">
+          <span className="brand-icon">🧑‍🍳</span>
+          <span className="brand-text">SmartRecipe</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link
+              as={Link}
+              to="/"
+              className={
+                location.pathname === "/" || location.pathname === ""
+                  ? "active"
+                  : ""
+              }
+            >
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/saved">
+            <Nav.Link
+              as={Link}
+              to="/saved"
+              className={location.pathname === "/saved" ? "active" : ""}
+            >
               Saved Recipes
             </Nav.Link>
-            <Nav.Link as={Link} to="/about">
+            <Nav.Link
+              as={Link}
+              to="/about"
+              className={location.pathname === "/about" ? "active" : ""}
+            >
               About
             </Nav.Link>
           </Nav>

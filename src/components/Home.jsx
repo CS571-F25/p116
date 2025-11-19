@@ -62,43 +62,52 @@ export default function Home() {
   };
 
   return (
-    <Container className="mt-4">
+    <Container className="mt-5">
       {/* Hero Section */}
       <Row className="mb-5">
         <Col md={10} className="mx-auto text-center">
-          <h1 className="display-4 mb-3">🧑‍🍳 SmartRecipe</h1>
-          <p className="lead text-muted">
-            Enter the ingredients you have, and we'll suggest delicious recipes
-            for you to cook!
-          </p>
+          <div className="hero-section">
+            <h1 className="hero-title display-3 mb-4">SmartRecipe</h1>
+            <p
+              className="lead"
+              style={{ color: "var(--color-warm-brown)", fontSize: "1.25rem" }}
+            >
+              Enter the ingredients you have, and we'll suggest delicious
+              recipes for you to cook!
+            </p>
+            <p className="text-muted mt-3" style={{ fontSize: "1rem" }}>
+              Turn your kitchen into a culinary adventure 🍳✨
+            </p>
+          </div>
         </Col>
       </Row>
 
       {/* Ingredient Input Form */}
-      <Row className="mb-4">
-        <Col md={8} className="mx-auto">
-          <Card className="shadow-sm">
-            <Card.Body className="p-4">
+      <Row className="mb-5">
+        <Col md={8} lg={7} className="mx-auto">
+          <Card className="input-card">
+            <Card.Body className="p-5">
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="h5">
+                <Form.Group className="mb-4">
+                  <Form.Label className="h5 mb-3">
                     What ingredients do you have?
                   </Form.Label>
                   <Form.Control
                     as="textarea"
-                    rows={3}
-                    placeholder="e.g., tomato, beef, potato, onion"
+                    rows={4}
+                    placeholder="e.g., tomato, beef, potato, onion, garlic..."
                     value={ingredients}
                     onChange={(e) => setIngredients(e.target.value)}
                     disabled={loading}
+                    style={{ fontSize: "16px", resize: "none" }}
                   />
-                  <Form.Text className="text-muted">
-                    Separate multiple ingredients with commas
+                  <Form.Text className="text-muted mt-2 d-block">
+                    💡 Separate multiple ingredients with commas
                   </Form.Text>
                 </Form.Group>
 
                 {error && (
-                  <Alert variant="danger" className="mb-3">
+                  <Alert variant="danger" className="mb-4">
                     {error}
                   </Alert>
                 )}
@@ -109,8 +118,20 @@ export default function Home() {
                     type="submit"
                     size="lg"
                     disabled={loading}
+                    className={loading ? "loading" : ""}
                   >
-                    {loading ? "Generating Recipes..." : "Generate Recipes"}
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Generating Recipes...
+                      </>
+                    ) : (
+                      <>🍽️ Generate Recipes</>
+                    )}
                   </Button>
                 </div>
               </Form>
@@ -119,36 +140,44 @@ export default function Home() {
         </Col>
       </Row>
 
-      {/* TODO: use separate component for recipe cards */}
+      {/* Recipe Cards */}
       {recipes.length > 0 && (
-        <Row>
+        <Row className="mb-5">
           <Col>
-            <h2 className="mb-4">Suggested Recipes</h2>
+            <h2 className="section-heading">✨ Suggested Recipes</h2>
             <Row>
               {recipes.map((recipe) => (
                 <Col md={4} key={recipe.id} className="mb-4">
-                  <Card className="h-100 shadow-sm">
-                    <Card.Body>
-                      <Card.Title>{recipe.title}</Card.Title>
-                      <Card.Text className="text-muted">
+                  <Card className="recipe-card h-100">
+                    <Card.Body className="p-4">
+                      <Card.Title
+                        className="h5 mb-3"
+                        style={{ color: "var(--color-warm-brown)" }}
+                      >
+                        {recipe.title}
+                      </Card.Title>
+                      <Card.Text
+                        className="text-muted mb-3"
+                        style={{ minHeight: "48px" }}
+                      >
                         {recipe.description}
                       </Card.Text>
-                      <div className="d-flex gap-2 mb-2">
-                        <small className="badge bg-secondary">
-                          {recipe.prepTime}
-                        </small>
-                        <small className="badge bg-info">
+                      <div className="d-flex gap-2 mb-3 flex-wrap">
+                        <span className="badge badge-time">
+                          ⏱️ {recipe.prepTime}
+                        </span>
+                        <span className="badge badge-difficulty">
                           {recipe.difficulty}
-                        </small>
-                        <small className="badge bg-warning text-dark">
-                          {recipe.calories} cal
-                        </small>
+                        </span>
+                        <span className="badge badge-calories">
+                          🔥 {recipe.calories} cal
+                        </span>
                       </div>
                       <div className="d-flex gap-1 flex-wrap">
                         {recipe.tags.map((tag, idx) => (
-                          <small key={idx} className="badge bg-light text-dark">
+                          <span key={idx} className="badge badge-tag">
                             {tag}
-                          </small>
+                          </span>
                         ))}
                       </div>
                     </Card.Body>
