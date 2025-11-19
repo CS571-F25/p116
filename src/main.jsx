@@ -1,7 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import "@radix-ui/themes/styles.css";
 import App from "./App.jsx";
+import { Theme } from "@radix-ui/themes";
 
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(
+  <Theme accentColor="orange" grayColor="sand" radius="medium">
+    <App />
+  </Theme>
+);

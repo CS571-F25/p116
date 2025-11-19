@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -9,37 +11,59 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Warm & Appetizing Color Palette */
-  --color-primary: #FF6B35;
-  --color-primary-light: #FF8C42;
-  --color-primary-dark: #E55A2B;
-  --color-secondary: #F7931E;
-  --color-accent: #FFB627;
-  --color-warm-red: #E63946;
-  --color-golden: #FFC857;
-  --color-warm-brown: #5C4033;
-  --color-warm-brown-light: #8B6F47;
-  --color-cream: #FFF8F0;
-  --color-cream-dark: #FDF5E6;
-  --color-warm-gray: #6B5B73;
-  --color-success: #6B8E23;
-  
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
-  --gradient-warm: linear-gradient(135deg, #FF8C42 0%, #FFB627 100%);
-  --gradient-soft: linear-gradient(135deg, #FFF8F0 0%, #FDF5E6 100%);
-  --gradient-hero: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 147, 30, 0.1) 100%);
+/* Override Radix Theme colors to match brand colors */
+.radix-themes {
+  /* Brand orange colors - override orange-9 and orange-10 */
+  --orange-9: #ff6b35;
+  --orange-a9: #ff6b35;
+  --orange-10: #f7931e;
+  --orange-a10: #f7931e;
+  --orange-8: #ff8c42;
+
+  /* Alpha colors for backgrounds and overlays */
+  --orange-a8: rgba(255, 107, 53, 0.12);
+  --orange-a7: rgba(255, 107, 53, 0.15);
+  --orange-a6: rgba(255, 107, 53, 0.1);
+  --orange-a5: rgba(255, 107, 53, 0.08);
+  --orange-a4: rgba(255, 107, 53, 0.3);
+  --orange-a3: rgba(255, 107, 53, 0.4);
+
+  /* Warm brown for text - override sand-11 */
+  --sand-11: #5c4033;
+  --sand-12: #5c4033;
+  --sand-6: #e8e8e8;
+  --sand-2: #fff8f0;
+  --sand-1: #fdf5e6;
+
+  /* Error/Red colors */
+  --red-9: #e63946;
+  --red-a9: #e63946;
+  --red-1: #fff5f5;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--gradient-soft);
-  color: var(--color-warm-brown);
+  background: linear-gradient(135deg, var(--sand-2) 0%, var(--sand-1) 100%);
+  color: var(--sand-11);
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: inherit;
 }

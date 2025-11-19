@@ -1,7 +1,14 @@
+import { Container, Heading } from "@radix-ui/themes";
+
+// Common class utilities
+const textBrown = "text-(--sand-11)";
+
 export default function Saved() {
   return (
-    <div>
-      <h1>My Saved Recipes</h1>
-    </div>
+    <Container size="4" className="mt-12">
+      <Heading size="8" className={textBrown}>
+        My Saved Recipes
+      </Heading>
+    </Container>
   );
 }

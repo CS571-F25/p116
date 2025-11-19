@@ -1,48 +1,68 @@
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Container, Flex, Text } from "@radix-ui/themes";
 import { Link, useLocation } from "react-router";
-import "./Navigation.css";
+
+// Common class utilities
+const navBorderGradient =
+  "after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-linear-to-r after:from-(--orange-9) after:to-(--orange-10)";
+const brandGradientText =
+  "bg-linear-to-br from-(--orange-9) to-(--orange-10) bg-clip-text text-transparent";
+const linkBase =
+  "px-4 py-2 rounded-lg font-medium transition-all relative no-underline";
+const linkActive =
+  "text-(--orange-9) bg-(--orange-a8) font-semibold after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-[60%] after:h-[3px] after:bg-linear-to-r after:from-(--orange-9) after:to-(--orange-10) after:rounded-t";
+const linkInactive =
+  "text-(--sand-11) hover:text-(--orange-9) hover:bg-(--orange-a5)";
 
 export default function Navigation() {
   const location = useLocation();
+  const isActive = (path) => {
+    if (path === "/") {
+      return location.pathname === "/" || location.pathname === "";
+    }
+    return location.pathname === path;
+  };
 
   return (
-    <Navbar expand="lg" className="custom-navbar" variant="light">
-      <Container>
-        <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">
-          <span className="brand-icon">🧑‍🍳</span>
-          <span className="brand-text">SmartRecipe</span>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link
-              as={Link}
+    <nav
+      className={`bg-white shadow-[0_2px_12px_rgba(92,64,51,0.08)] py-4 relative ${navBorderGradient}`}
+    >
+      <Container size="4">
+        <Flex justify="between" align="center" className="flex-wrap gap-4">
+          <Link
+            to="/"
+            className="text-2xl font-bold text-(--sand-11) no-underline flex items-center gap-2 transition-transform hover:scale-105 hover:text-(--orange-9)"
+          >
+            <span className="text-[1.75rem]">🧑‍🍳</span>
+            <span className={brandGradientText}>🧑SmartRecipe</span>
+          </Link>
+          <Flex gap="4" align="center" className="flex-wrap">
+            <Link
               to="/"
-              className={
-                location.pathname === "/" || location.pathname === ""
-                  ? "active"
-                  : ""
-              }
+              className={`${linkBase} ${
+                isActive("/") ? linkActive : linkInactive
+              }`}
             >
               Home
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
+            </Link>
+            <Link
               to="/saved"
-              className={location.pathname === "/saved" ? "active" : ""}
+              className={`${linkBase} ${
+                isActive("/saved") ? linkActive : linkInactive
+              }`}
             >
               Saved Recipes
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
+            </Link>
+            <Link
               to="/about"
-              className={location.pathname === "/about" ? "active" : ""}
+              className={`${linkBase} ${
+                isActive("/about") ? linkActive : linkInactive
+              }`}
             >
               About
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+            </Link>
+          </Flex>
+        </Flex>
       </Container>
-    </Navbar>
+    </nav>
   );
 }
