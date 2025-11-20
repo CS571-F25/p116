@@ -65,7 +65,8 @@ export default function Home() {
         {
           id: 1,
           title: "Classic Beef Stir-Fry",
-          description: "A quick and flavorful stir-fry that brings together tender beef, crisp vegetables, and a savory sauce. Perfect for a weeknight dinner that's ready in under 30 minutes.",
+          description:
+            "A quick and flavorful stir-fry that brings together tender beef, crisp vegetables, and a savory sauce. Perfect for a weeknight dinner that's ready in under 30 minutes.",
           prepTime: "30 min",
           difficulty: "Easy",
           calories: "420",
@@ -79,7 +80,7 @@ export default function Home() {
             "2 tablespoons vegetable oil",
             "2 tablespoons soy sauce",
             "1 tablespoon oyster sauce",
-            "Salt and pepper to taste"
+            "Salt and pepper to taste",
           ],
           instructions: [
             "Heat oil in a large wok or skillet over high heat.",
@@ -90,18 +91,19 @@ export default function Home() {
             "Add tomatoes and cook for 2 minutes until they release their juices.",
             "Return beef to the pan and add soy sauce and oyster sauce.",
             "Toss everything together and cook for another 2 minutes.",
-            "Season with salt and pepper. Serve hot over rice."
+            "Season with salt and pepper. Serve hot over rice.",
           ],
           tips: [
             "Slice the beef while it's slightly frozen for easier cutting.",
             "Don't overcook the vegetables - they should remain crisp.",
-            "Have all ingredients prepped before you start cooking (mise en place)."
-          ]
+            "Have all ingredients prepped before you start cooking (mise en place).",
+          ],
         },
         {
           id: 2,
           title: "Hearty Beef and Potato Stew",
-          description: "A comforting stew that combines tender beef chunks with potatoes and tomatoes in a rich, savory broth. Perfect for a cozy dinner on a chilly evening.",
+          description:
+            "A comforting stew that combines tender beef chunks with potatoes and tomatoes in a rich, savory broth. Perfect for a cozy dinner on a chilly evening.",
           prepTime: "45 min",
           difficulty: "Medium",
           calories: "380",
@@ -116,7 +118,7 @@ export default function Home() {
             "2 cups beef broth",
             "1 bay leaf",
             "Salt and pepper to taste",
-            "Fresh herbs (thyme or rosemary)"
+            "Fresh herbs (thyme or rosemary)",
           ],
           instructions: [
             "Heat olive oil in a large pot over medium-high heat.",
@@ -126,18 +128,19 @@ export default function Home() {
             "Return beef to the pot and add beef broth and bay leaf.",
             "Bring to a boil, then reduce heat and simmer for 20 minutes.",
             "Add potatoes and continue simmering for 15-20 minutes until potatoes are tender.",
-            "Season with salt and pepper. Garnish with fresh herbs and serve hot."
+            "Season with salt and pepper. Garnish with fresh herbs and serve hot.",
           ],
           tips: [
             "Brown the beef well for deeper flavor in the stew.",
             "Cut potatoes into uniform pieces for even cooking.",
-            "Let the stew rest for 10 minutes before serving to allow flavors to meld."
-          ]
+            "Let the stew rest for 10 minutes before serving to allow flavors to meld.",
+          ],
         },
         {
           id: 3,
           title: "Mediterranean Beef and Potato Bake",
-          description: "A delicious one-pan dish featuring beef, potatoes, and tomatoes roasted together with garlic and herbs. Simple, flavorful, and perfect for family dinners.",
+          description:
+            "A delicious one-pan dish featuring beef, potatoes, and tomatoes roasted together with garlic and herbs. Simple, flavorful, and perfect for family dinners.",
           prepTime: "35 min",
           difficulty: "Easy",
           calories: "350",
@@ -152,7 +155,7 @@ export default function Home() {
             "1 teaspoon dried oregano",
             "1 teaspoon dried thyme",
             "Salt and pepper to taste",
-            "Fresh parsley for garnish"
+            "Fresh parsley for garnish",
           ],
           instructions: [
             "Preheat oven to 400°F (200°C).",
@@ -161,13 +164,13 @@ export default function Home() {
             "Spread everything in a single layer on a large baking sheet.",
             "Roast for 25-30 minutes, stirring halfway through, until beef is cooked and potatoes are tender.",
             "Remove from oven and let rest for 5 minutes.",
-            "Garnish with fresh parsley and serve hot."
+            "Garnish with fresh parsley and serve hot.",
           ],
           tips: [
             "Cut all ingredients into similar sizes for even cooking.",
             "Don't overcrowd the baking sheet - use two if needed.",
-            "The garlic will become sweet and mellow when roasted whole."
-          ]
+            "The garlic will become sweet and mellow when roasted whole.",
+          ],
         },
       ]);
       setLoading(false);
