@@ -23,11 +23,11 @@ export default function Saved() {
 
   return (
     <Container className="p-4">
-      <h4 className="section-heading mb-4">My Saved Recipes</h4>
+      <h5 className="section-heading mb-4">My Saved Recipes</h5>
       {savedRecipes.length > 0 ? (
         <Row className="g-3">
           {savedRecipes.map((recipe) => (
-            <Col key={recipe.id} xs={12} sm={6} md={4} lg={4}>
+            <Col key={recipe.id} xs={12} sm={6} md={6} lg={4}>
               <RecipeCard
                 recipe={recipe}
                 isSaved={true}

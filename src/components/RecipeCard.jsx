@@ -35,10 +35,10 @@ export default function RecipeCard({
         onClick={handleCardClick}
         style={{ cursor: "pointer" }}
       >
-        <Card.Body className="p-3">
+        <Card.Body className="p-4">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <Card.Title
-              className="h5 mb-0"
+              className="h5 mb-2"
               style={{ color: "var(--color-warm-brown)", flex: 1 }}
             >
               {recipe.title}
@@ -65,7 +65,7 @@ export default function RecipeCard({
             </OverlayTrigger>
           </div>
           <Card.Text
-            className="text-muted mb-2"
+            className="text-muted mb-3"
             style={{ minHeight: "40px", fontSize: "0.9rem" }}
           >
             {recipe.description}
