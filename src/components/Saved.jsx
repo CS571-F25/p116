@@ -41,7 +41,8 @@ export default function Saved() {
           className="text-center"
           style={{ color: "var(--color-warm-brown)" }}
         >
-          No saved recipes yet. Start saving recipes from the Home page!
+          <p>No saved recipes yet.</p>
+          <p>Start saving recipes from the Home page!</p>
         </div>
       )}
     </Container>

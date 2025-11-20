@@ -36,9 +36,9 @@ export default function RecipeCard({
         style={{ cursor: "pointer" }}
       >
         <Card.Body className="p-4">
-          <div className="d-flex justify-content-between align-items-center mb-2">
+          <div className="d-flex justify-content-between align-items-center mb-3">
             <Card.Title
-              className="h5 mb-2"
+              className="h5 mb-0"
               style={{ color: "var(--color-warm-brown)", flex: 1 }}
             >
               {recipe.title}
@@ -50,8 +50,6 @@ export default function RecipeCard({
               <div
                 onClick={handleSaveClick}
                 style={{
-                  width: "36px",
-                  height: "36px",
                   cursor: "pointer",
                   fontSize: "1.5rem",
                   color: "var(--color-primary)",
@@ -64,20 +62,20 @@ export default function RecipeCard({
               </div>
             </OverlayTrigger>
           </div>
-          <Card.Text
-            className="text-muted mb-3"
-            style={{ minHeight: "40px", fontSize: "0.9rem" }}
-          >
-            {recipe.description}
-          </Card.Text>
-          <div className="d-flex gap-2 mb-2 flex-wrap">
+          <div className="d-flex gap-2 mb-3 flex-wrap">
             <span className="badge badge-time">⏱️ {recipe.prepTime}</span>
             <span className="badge badge-difficulty">{recipe.difficulty}</span>
             <span className="badge badge-calories">
               🔥 {recipe.calories} cal
             </span>
           </div>
-          <div className="d-flex gap-1 flex-wrap">
+          <Card.Text
+            className="text-muted mb-3"
+            style={{ minHeight: "40px", fontSize: "0.9rem" }}
+          >
+            {recipe.description}
+          </Card.Text>
+          <div className="d-flex gap-2 flex-wrap">
             {recipe.tags.map((tag, idx) => (
               <span key={idx} className="badge badge-tag">
                 {tag}

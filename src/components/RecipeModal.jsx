@@ -27,21 +27,20 @@ export default function RecipeModal({
           {recipe.title}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <div className="mb-3">
-          <p className="text-muted" style={{ fontSize: "1rem" }}>
-            {recipe.description}
-          </p>
-        </div>
 
-        <div className="d-flex gap-2 mb-2 flex-wrap">
+      <Modal.Body>
+        <div className="d-flex gap-2 mb-3 flex-wrap">
           <Badge className="badge badge-time">⏱️ {recipe.prepTime}</Badge>
           <Badge className="badge badge-difficulty">{recipe.difficulty}</Badge>
           <Badge className="badge badge-calories">
             🔥 {recipe.calories} cal
           </Badge>
         </div>
-
+        <div className="mb-2">
+          <p className="text-muted" style={{ fontSize: "1rem" }}>
+            {recipe.description}
+          </p>
+        </div>
         {recipe.tags?.length > 0 && (
           <div className="d-flex gap-2 flex-wrap">
             {recipe.tags.map((tag, idx) => (
