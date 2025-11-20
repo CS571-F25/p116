@@ -1,13 +1,13 @@
 .custom-navbar {
-  background: white !important;
-  box-shadow: 0 2px 12px rgba(92, 64, 51, 0.08);
-  padding: 16px 0;
+  background: var(--gradient-primary) !important;
+  box-shadow: 0 2px 12px rgba(92, 64, 51, 0.15);
+  padding: 10px 0;
 }
 
 .navbar-brand-custom {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-warm-brown) !important;
+  color: white !important;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
 
 .navbar-brand-custom:hover {
   transform: scale(1.05);
-  color: var(--color-primary) !important;
+  color: var(--color-cream) !important;
 }
 
 .brand-icon {
@@ -26,14 +26,13 @@
 }
 
 .brand-text {
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: white !important;
+  -webkit-text-fill-color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .custom-navbar .nav-link {
-  color: var(--color-warm-brown) !important;
+  color: white !important;
   font-weight: 500;
   margin: 0 8px;
   padding: 8px 16px !important;
@@ -43,12 +42,12 @@
 }
 
 .custom-navbar .nav-link:hover {
-  color: var(--color-primary) !important;
-  background: rgba(255, 107, 53, 0.08);
+  color: var(--color-cream) !important;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .custom-navbar .nav-link.active {
-  color: var(--color-primary) !important;
-  background: rgba(255, 107, 53, 0.12);
+  color: white !important;
+  background: rgba(255, 255, 255, 0.25);
   font-weight: 600;
 }

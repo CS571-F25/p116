@@ -12,7 +12,7 @@ export default function Navigation() {
   ];
 
   return (
-    <Navbar expand="lg" className="custom-navbar" variant="light">
+    <Navbar expand="lg" className="custom-navbar" variant="dark">
       <Container>
         <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">
           <span className="brand-icon">🧑‍🍳</span>
