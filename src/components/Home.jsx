@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -8,12 +8,45 @@ import {
   Card,
   Alert,
 } from "react-bootstrap";
+import RecipeCard from "./RecipeCard";
+import {
+  saveRecipe,
+  removeRecipe,
+  getSavedRecipes,
+} from "../utils/savedRecipes";
 
 export default function Home() {
   const [ingredients, setIngredients] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [currentStep, setCurrentStep] = useState("ingredients"); // 'ingredients' or 'recipes'
+  const [savedRecipeIds, setSavedRecipeIds] = useState(new Set());
+
+  // Load saved recipe IDs on mount and when recipes change
+  useEffect(() => {
+    if (recipes.length > 0) {
+      const saved = getSavedRecipes();
+      const savedIds = new Set(saved.map((r) => r.id));
+      setSavedRecipeIds(savedIds);
+    }
+  }, [recipes]);
+
+  const handleSaveRecipe = (recipe) => {
+    if (saveRecipe(recipe)) {
+      setSavedRecipeIds((prev) => new Set([...prev, recipe.id]));
+    }
+  };
+
+  const handleUnsaveRecipe = (recipeId) => {
+    if (removeRecipe(recipeId)) {
+      setSavedRecipeIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(recipeId);
+        return newSet;
+      });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,149 +91,116 @@ export default function Home() {
         },
       ]);
       setLoading(false);
+      setCurrentStep("recipes");
     }, 1000);
   };
 
+  const handleBackToIngredients = () => {
+    setCurrentStep("ingredients");
+    setRecipes([]);
+    // setIngredients("");
+    setError("");
+  };
+
   return (
-    <Container className="mt-5">
-      {/* Hero Section */}
-      <Row className="mb-5">
-        <Col md={10} className="mx-auto text-center">
-          <div className="hero-section">
-            <h1 className="hero-title display-3 mb-4">SmartRecipe</h1>
+    <Container className="p-4">
+      {currentStep === "ingredients" ? (
+        /* Step 1: Ingredient Input Form */
+        <>
+          <Row className="my-4 text-center">
             <p
               className="lead"
               style={{ color: "var(--color-warm-brown)", fontSize: "1.25rem" }}
             >
-              Enter the ingredients you have, and we'll suggest delicious
-              recipes for you to cook!
+              Turn your ingredients into delicious recipes 🍳✨
             </p>
-            <p className="text-muted mt-3" style={{ fontSize: "1rem" }}>
-              Turn your kitchen into a culinary adventure 🍳✨
-            </p>
-          </div>
-        </Col>
-      </Row>
+          </Row>
+          <Row className="justify-content-center">
+            <Col md={8} lg={6}>
+              {/* <h4 className="section-heading mb-3 text-center">
+              Enter Ingredients
+            </h4> */}
+              <Card className="input-card">
+                <Card.Body className="p-4">
+                  <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3">
+                      <Form.Label className="h6 mb-2">
+                        What ingredients do you have?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={4}
+                        placeholder="e.g., tomato, beef, potato, onion, garlic..."
+                        value={ingredients}
+                        onChange={(e) => setIngredients(e.target.value)}
+                        disabled={loading}
+                        style={{ fontSize: "16px", resize: "none" }}
+                      />
+                      <Form.Text className="text-muted mt-2 d-block">
+                        💡 Separate multiple ingredients with commas
+                      </Form.Text>
+                    </Form.Group>
 
-      {/* Ingredient Input Form */}
-      <Row className="mb-5">
-        <Col md={8} lg={7} className="mx-auto">
-          <Card className="input-card">
-            <Card.Body className="p-5">
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-4">
-                  <Form.Label className="h5 mb-3">
-                    What ingredients do you have?
-                  </Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    placeholder="e.g., tomato, beef, potato, onion, garlic..."
-                    value={ingredients}
-                    onChange={(e) => setIngredients(e.target.value)}
-                    disabled={loading}
-                    style={{ fontSize: "16px", resize: "none" }}
-                  />
-                  <Form.Text className="text-muted mt-2 d-block">
-                    💡 Separate multiple ingredients with commas
-                  </Form.Text>
-                </Form.Group>
-
-                {error && (
-                  <Alert variant="danger" className="mb-4">
-                    {error}
-                  </Alert>
-                )}
-
-                <div className="d-grid">
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    size="lg"
-                    disabled={loading}
-                    className={loading ? "loading" : ""}
-                  >
-                    {loading ? (
-                      <>
-                        <span
-                          className="spinner-border spinner-border-sm me-2"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
-                        Generating Recipes...
-                      </>
-                    ) : (
-                      <>🍽️ Generate Recipes</>
+                    {error && (
+                      <Alert variant="danger" className="mb-3">
+                        {error}
+                      </Alert>
                     )}
-                  </Button>
-                </div>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
 
-      {/* Recipe Cards */}
-      {recipes.length > 0 && (
-        <Row className="mb-5">
-          <Col>
-            <h2 className="section-heading">✨ Suggested Recipes</h2>
-            <Row>
-              {recipes.map((recipe) => (
-                <Col md={4} key={recipe.id} className="mb-4">
-                  <Card className="recipe-card h-100">
-                    <Card.Body className="p-4">
-                      <Card.Title
-                        className="h5 mb-3"
-                        style={{ color: "var(--color-warm-brown)" }}
+                    <div className="d-grid">
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        size="lg"
+                        disabled={loading}
+                        className={loading ? "loading" : ""}
                       >
-                        {recipe.title}
-                      </Card.Title>
-                      <Card.Text
-                        className="text-muted mb-3"
-                        style={{ minHeight: "48px" }}
-                      >
-                        {recipe.description}
-                      </Card.Text>
-                      <div className="d-flex gap-2 mb-3 flex-wrap">
-                        <span className="badge badge-time">
-                          ⏱️ {recipe.prepTime}
-                        </span>
-                        <span className="badge badge-difficulty">
-                          {recipe.difficulty}
-                        </span>
-                        <span className="badge badge-calories">
-                          🔥 {recipe.calories} cal
-                        </span>
-                      </div>
-                      <div className="d-flex gap-1 flex-wrap">
-                        {recipe.tags.map((tag, idx) => (
-                          <span key={idx} className="badge badge-tag">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </Col>
-        </Row>
+                        {loading ? (
+                          <>
+                            <span
+                              className="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            Generating Recipes...
+                          </>
+                        ) : (
+                          <>Generate Recipes</>
+                        )}
+                      </Button>
+                    </div>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </>
+      ) : (
+        /* Step 2: Recipe Cards */
+        <>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h4 className="section-heading">✨ Suggested Recipes</h4>
+            <Button
+              variant="outline-secondary"
+              onClick={handleBackToIngredients}
+            >
+              ← Back
+            </Button>
+          </div>
+          <Row className="g-3">
+            {recipes.slice(0, 3).map((recipe) => (
+              <Col key={recipe.id} xs={12} sm={6} md={4} lg={4}>
+                <RecipeCard
+                  recipe={recipe}
+                  isSaved={savedRecipeIds.has(recipe.id)}
+                  onSave={handleSaveRecipe}
+                  onUnsave={handleUnsaveRecipe}
+                />
+              </Col>
+            ))}
+          </Row>
+        </>
       )}
-
-      {/* Empty State */}
-      {/* {recipes.length === 0 && !loading && (
-        <Row>
-          <Col md={8} className="mx-auto text-center">
-            <div className="text-muted">
-              <p className="mb-0">
-                👆 Enter your ingredients above to get started!
-              </p>
-            </div>
-          </Col>
-        </Row>
-      )} */}
     </Container>
   );
 }

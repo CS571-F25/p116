@@ -5,6 +5,12 @@ import "./Navigation.css";
 export default function Navigation() {
   const location = useLocation();
 
+  const navItems = [
+    { path: "/", label: "Home" },
+    { path: "/saved", label: "Saved Recipes" },
+    { path: "/about", label: "About" },
+  ];
+
   return (
     <Navbar expand="lg" className="custom-navbar" variant="light">
       <Container>
@@ -15,31 +21,21 @@ export default function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link
-              as={Link}
-              to="/"
-              className={
-                location.pathname === "/" || location.pathname === ""
-                  ? "active"
-                  : ""
-              }
-            >
-              Home
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/saved"
-              className={location.pathname === "/saved" ? "active" : ""}
-            >
-              Saved Recipes
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/about"
-              className={location.pathname === "/about" ? "active" : ""}
-            >
-              About
-            </Nav.Link>
+            {navItems.map((item) => (
+              <Nav.Link
+                key={item.path}
+                as={Link}
+                to={item.path}
+                className={
+                  location.pathname === item.path ||
+                  (item.path === "/" && location.pathname === "")
+                    ? "active"
+                    : ""
+                }
+              >
+                {item.label}
+              </Nav.Link>
+            ))}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -2,8 +2,6 @@
   background: white !important;
   box-shadow: 0 2px 12px rgba(92, 64, 51, 0.08);
   padding: 16px 0;
-  border-bottom: 3px solid transparent;
-  border-image: linear-gradient(90deg, #FF6B35 0%, #F7931E 100%) 1;
 }
 
 .navbar-brand-custom {
@@ -28,7 +26,7 @@
 }
 
 .brand-text {
-  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -54,16 +52,3 @@
   background: rgba(255, 107, 53, 0.12);
   font-weight: 600;
 }
-
-.custom-navbar .nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 3px;
-  background: var(--gradient-primary);
-  border-radius: 2px 2px 0 0;
-}
-
