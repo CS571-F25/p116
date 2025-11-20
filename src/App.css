@@ -7,37 +7,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Save Button - Orange (Unsaved State - No Background) */
-.btn-orange {
-  border: none;
-  border-radius: 8px;
-  padding: 0;
-  font-weight: 600;
-  color: var(--color-primary);
-  transition: all 0.3s ease;
-  box-shadow: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-orange:hover {
-  background: transparent;
-  transform: translateY(-1px);
-  color: var(--color-primary-dark);
-  opacity: 0.8;
-}
-
-.btn-orange:active {
-  transform: translateY(0);
-}
-
-.btn-orange:focus {
-  background: transparent;
-  color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
-}
-
 /* Custom Card Styling */
 .card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,7 +87,6 @@ html {
 .alert-danger {
   background-color: #fff5f5;
   color: var(--color-warm-red);
-  border-left: 4px solid var(--color-warm-red);
 }
 
 /* Hero Section */
@@ -167,8 +135,8 @@ html {
 
 .badge-tag {
   background: #fff8f0;
-  color: var(--color-warm-brown);
   border: 1px solid #ffe5d4;
+  color: var(--color-warm-brown);
 }
 
 /* Input Card */
@@ -212,4 +180,41 @@ html {
   background-color: var(--color-cream);
   color: var(--color-warm-brown);
   border-left: 4px solid var(--color-primary);
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 8px 32px rgba(92, 64, 51, 0.2);
+}
+
+.modal-header {
+  border-bottom: 2px solid #f0f0f0;
+  padding: 1.5rem;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  border-top: 2px solid #f0f0f0;
+  padding: 1rem 1.5rem;
+}
+
+.modal-body ul,
+.modal-body ol {
+  margin-bottom: 0;
+}
+
+.modal-body li {
+  line-height: 1.6;
+  color: var(--color-warm-brown);
 }
