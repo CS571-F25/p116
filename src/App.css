@@ -119,18 +119,18 @@ html {
 
 /* Badge Colors */
 .badge-time {
-  background: linear-gradient(135deg, #6b8e23 0%, #8b9a46 100%);
+  background: #6b8e23 !important;
   color: white;
 }
 
 .badge-difficulty {
-  background: linear-gradient(135deg, #4a90e2 0%, #5ba3f5 100%);
+  background: #4a90e2 !important;
   color: white;
 }
 
 .badge-calories {
-  background: linear-gradient(135deg, #ffb627 0%, #ffc857 100%);
-  color: var(--color-warm-brown);
+  background: #ff8c42 !important;
+  color: white;
 }
 
 .badge-tag {
@@ -216,5 +216,36 @@ html {
 
 .modal-body li {
   line-height: 1.6;
+  color: var(--color-warm-brown);
+}
+
+/* Accordion Styling */
+.accordion-button {
+  background-color: var(--color-cream);
+  color: var(--color-warm-brown);
+  border: none;
+  box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--color-cream-dark);
+  color: var(--color-warm-brown);
+  box-shadow: none;
+}
+
+.accordion-item {
+  border: 1px solid #ffe5d4;
+  border-radius: 8px !important;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.accordion-button:focus {
+  border-color: none;
+  box-shadow: none;
+}
+
+.accordion-body {
+  background-color: white;
   color: var(--color-warm-brown);
 }

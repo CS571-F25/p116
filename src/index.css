@@ -11,25 +11,30 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Warm & Appetizing Color Palette */
-  --color-primary: #FF6B35;
-  --color-primary-light: #FF8C42;
-  --color-primary-dark: #E55A2B;
-  --color-secondary: #F7931E;
-  --color-accent: #FFB627;
-  --color-warm-red: #E63946;
-  --color-golden: #FFC857;
-  --color-warm-brown: #5C4033;
-  --color-warm-brown-light: #8B6F47;
-  --color-cream: #FFF8F0;
-  --color-cream-dark: #FDF5E6;
-  --color-warm-gray: #6B5B73;
-  --color-success: #6B8E23;
-  
+  --color-primary: #ff6b35;
+  --color-primary-light: #ff8c42;
+  --color-primary-dark: #e55a2b;
+  --color-secondary: #f7931e;
+  --color-accent: #ffb627;
+  --color-warm-red: #e63946;
+  --color-golden: #ffc857;
+  --color-warm-brown: #5c4033;
+  --color-warm-brown-light: #8b6f47;
+  --color-cream: #fff8f0;
+  --color-cream-dark: #fdf5e6;
+  --color-warm-gray: #6b5b73;
+  --color-success: #6b8e23;
+  --color-success-light: #8b9a46;
+
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
-  --gradient-warm: linear-gradient(135deg, #FF8C42 0%, #FFB627 100%);
-  --gradient-soft: linear-gradient(135deg, #FFF8F0 0%, #FDF5E6 100%);
-  --gradient-hero: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 147, 30, 0.1) 100%);
+  --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  --gradient-warm: linear-gradient(135deg, #ff8c42 0%, #ffb627 100%);
+  --gradient-soft: linear-gradient(135deg, #fff8f0 0%, #fdf5e6 100%);
+  --gradient-hero: linear-gradient(
+    135deg,
+    rgba(255, 107, 53, 0.1) 0%,
+    rgba(247, 147, 30, 0.1) 100%
+  );
 }
 
 body {

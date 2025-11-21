@@ -1,19 +1,15 @@
-import { Modal, Button, Badge } from "react-bootstrap";
+import { Modal, Badge, Accordion } from "react-bootstrap";
 
 export default function RecipeModal({
   recipe,
   show,
   onHide,
+  // eslint-disable-next-line no-unused-vars
   isSaved = false,
+  // eslint-disable-next-line no-unused-vars
   onSave,
 }) {
   if (!recipe) return null;
-
-  const handleSaveClick = () => {
-    if (onSave) {
-      onSave();
-    }
-  };
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
@@ -42,7 +38,7 @@ export default function RecipeModal({
           </p>
         </div>
         {recipe.tags?.length > 0 && (
-          <div className="d-flex gap-2 flex-wrap">
+          <div className="d-flex gap-2 flex-wrap mb-4">
             {recipe.tags.map((tag, idx) => (
               <Badge key={idx} bg="#fff8f0" className="badge badge-tag">
                 {tag}
@@ -50,69 +46,58 @@ export default function RecipeModal({
             ))}
           </div>
         )}
+        <Accordion defaultActiveKey="ingredients" className="mb-3">
+          {recipe.ingredients?.length > 0 && (
+            <Accordion.Item eventKey="ingredients">
+              <Accordion.Header>
+                <strong>Ingredients</strong>
+              </Accordion.Header>
+              <Accordion.Body>
+                <ul style={{ paddingLeft: "1.5rem", marginBottom: 0 }}>
+                  {recipe.ingredients.map((ingredient, idx) => (
+                    <li key={idx} style={{ marginBottom: "0.5rem" }}>
+                      {ingredient}
+                    </li>
+                  ))}
+                </ul>
+              </Accordion.Body>
+            </Accordion.Item>
+          )}
 
-        {recipe.ingredients?.length > 0 && (
-          <div className="my-4">
-            <h6
-              style={{
-                color: "var(--color-warm-brown)",
-                fontWeight: 600,
-                marginBottom: "0.75rem",
-              }}
-            >
-              Ingredients
-            </h6>
-            <ul style={{ paddingLeft: "1.5rem" }}>
-              {recipe.ingredients.map((ingredient, idx) => (
-                <li key={idx} style={{ marginBottom: "0.5rem" }}>
-                  {ingredient}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          {recipe.instructions?.length > 0 && (
+            <Accordion.Item eventKey="instructions">
+              <Accordion.Header>
+                <strong>Instructions</strong>
+              </Accordion.Header>
+              <Accordion.Body>
+                <ol style={{ paddingLeft: "1.5rem", marginBottom: 0 }}>
+                  {recipe.instructions.map((instruction, idx) => (
+                    <li key={idx} style={{ marginBottom: "0.75rem" }}>
+                      {instruction}
+                    </li>
+                  ))}
+                </ol>
+              </Accordion.Body>
+            </Accordion.Item>
+          )}
 
-        {recipe.instructions?.length > 0 && (
-          <div className="mb-4">
-            <h6
-              style={{
-                color: "var(--color-warm-brown)",
-                fontWeight: 600,
-                marginBottom: "0.75rem",
-              }}
-            >
-              Instructions
-            </h6>
-            <ol style={{ paddingLeft: "1.5rem" }}>
-              {recipe.instructions.map((instruction, idx) => (
-                <li key={idx} style={{ marginBottom: "0.75rem" }}>
-                  {instruction}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-
-        {recipe.tips && recipe.tips.length > 0 && (
-          <div className="mb-4">
-            <h6
-              style={{
-                color: "var(--color-warm-brown)",
-                fontWeight: 600,
-                marginBottom: "0.75rem",
-              }}
-            >
-              Cooking Tips
-            </h6>
-            <ul style={{ paddingLeft: "1.5rem" }}>
-              {recipe.tips.map((tip, idx) => (
-                <li key={idx} style={{ marginBottom: "0.5rem" }}>
-                  {tip}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          {recipe.tips?.length > 0 && (
+            <Accordion.Item eventKey="tips">
+              <Accordion.Header>
+                <strong>Cooking Tips</strong>
+              </Accordion.Header>
+              <Accordion.Body>
+                <ul style={{ paddingLeft: "1.5rem", marginBottom: 0 }}>
+                  {recipe.tips.map((tip, idx) => (
+                    <li key={idx} style={{ marginBottom: "0.5rem" }}>
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </Accordion.Body>
+            </Accordion.Item>
+          )}
+        </Accordion>
       </Modal.Body>
       {/* <Modal.Footer>
         <Button variant="primary" onClick={handleSaveClick}>
