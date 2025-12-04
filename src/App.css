@@ -278,12 +278,9 @@ body {
 .filter-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-left: 30px;
 }
 
 .preference-checkbox {
-  min-width: 120px;
   display: flex;
   align-items: center;
 }

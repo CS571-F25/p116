@@ -1,4 +1,4 @@
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 
 export default function FilterGroup({
   category,
@@ -9,24 +9,25 @@ export default function FilterGroup({
   onChange,
 }) {
   return (
-    <Form.Group className="mb-5">
+    <Form.Group className="mb-4 mb-md-5">
       <Form.Label className="h5 mb-3" style={{ color: "var(--color-primary)" }}>
         {icon && <span className="me-2">{icon}</span>}
         {label}
       </Form.Label>
-      <div className="filter-group">
+      <Row className="filter-group g-2">
         {options.map((option) => (
-          <Form.Check
-            key={option}
-            type="checkbox"
-            id={`${category}-${option}`}
-            label={option}
-            checked={selectedValues.includes(option)}
-            onChange={() => onChange(category, option)}
-            className="preference-checkbox"
-          />
+          <Col key={option} xs={6} sm={6} md={4} lg={3} xl={2}>
+            <Form.Check
+              type="checkbox"
+              id={`${category}-${option}`}
+              label={option}
+              checked={selectedValues.includes(option)}
+              onChange={() => onChange(category, option)}
+              className="preference-checkbox"
+            />
+          </Col>
         ))}
-      </div>
+      </Row>
     </Form.Group>
   );
 }

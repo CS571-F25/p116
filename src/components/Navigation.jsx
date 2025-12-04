@@ -8,7 +8,7 @@ export default function Navigation() {
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/saved", label: "Saved Recipes" },
-    { path: "/preference", label: "Preference" },
+    { path: "/preference", label: "Preferences" },
     { path: "/about", label: "About" },
   ];
 

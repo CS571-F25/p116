@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Container,
   Row,
@@ -12,24 +12,13 @@ import {
   getUserPreferences,
   saveUserPreferences,
   resetPreferences,
+  preferenceCategories,
 } from "../utils/preferences";
 import FilterGroup from "./FilterGroup";
 
 export default function Preference() {
-  const [preferences, setPreferences] = useState({
-    dietaryRestrictions: [],
-    cuisineStyle: [],
-    mealType: [],
-    cookingComplexity: [],
-    spiceLevel: [],
-  });
+  const [preferences, setPreferences] = useState(getUserPreferences);
   const [saveStatus, setSaveStatus] = useState(""); // 'success' or 'error'
-
-  // Load preferences from localStorage on mount
-  useEffect(() => {
-    const saved = getUserPreferences();
-    setPreferences(saved);
-  }, []);
 
   const handleCheckboxChange = (category, value) => {
     setPreferences((prev) => {
@@ -48,129 +37,74 @@ export default function Preference() {
   const handleSave = () => {
     const success = saveUserPreferences(preferences);
     if (success) {
-      setSaveStatus("success");
-      setTimeout(() => setSaveStatus(""), 3000);
+      handleAlert("success");
     } else {
-      setSaveStatus("error");
-      setTimeout(() => setSaveStatus(""), 3000);
+      handleAlert("error");
     }
   };
 
   const handleReset = () => {
-    if (resetPreferences()) {
+    const success = resetPreferences();
+    if (success) {
       const defaultPrefs = getUserPreferences();
       setPreferences(defaultPrefs);
-      setSaveStatus("success");
-      setTimeout(() => setSaveStatus(""), 3000);
+      handleAlert("success");
     } else {
-      setSaveStatus("error");
-      setTimeout(() => setSaveStatus(""), 3000);
+      handleAlert("error");
     }
   };
 
-  const preferenceCategories = [
-    {
-      key: "complexity",
-      label: "Cooking Complexity",
-      icon: "⏱️",
-      options: ["Easy", "Medium", "Hard"],
-    },
-    {
-      key: "spice",
-      label: "Spice Level",
-      icon: "🌶️",
-      options: ["Mild", "Medium", "Hot"],
-    },
-    {
-      key: "dietary",
-      label: "Dietary Restrictions",
-      icon: "🥗",
-      options: [
-        "Vegan",
-        "Vegetarian",
-        "Gluten-Free",
-        "Dairy-Free",
-        "Nut-Free",
-        "Keto",
-        "Paleo",
-        "Low-Carb",
-      ],
-    },
-    {
-      key: "cuisine",
-      label: "Cuisine Style",
-      icon: "🌍",
-      options: [
-        "Asian",
-        "Italian",
-        "Mexican",
-        "Mediterranean",
-        "American",
-        "Indian",
-        "French",
-        "Japanese",
-        "Thai",
-        "Chinese",
-      ],
-    },
-    {
-      key: "meal",
-      label: "Meal Type",
-      icon: "🍽️",
-      options: ["Breakfast", "Lunch", "Dinner", "Snack", "Dessert"],
-    },
-  ];
+  const handleAlert = (status) => {
+    setSaveStatus(status);
+    setTimeout(() => setSaveStatus(""), 3000);
+  };
 
   return (
-    <Container className="mt-5">
-      <Row>
-        <Col md={10} className="mx-auto">
-          <div className="text-center mb-5">
-            {/* <h1 className="hero-title display-4 mb-3">Preferences</h1> */}
-            <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
-              Customize your recipe recommendations 🪄
-            </p>
+    <Container className="fluid p-4">
+      {/* <h5 className="section-heading mb-4">Preferences</h5> */}
+      <Row className="my-2 my-md-4 text-center">
+        <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
+          Customize your recipe recommendations 🪄
+        </p>
+      </Row>
+
+      <Card className="mb-4">
+        <Card.Body className="p-4 p-md-5">
+          <Form>
+            {preferenceCategories.map((category) => (
+              <FilterGroup
+                key={category.key}
+                category={category.key}
+                label={category.label}
+                icon={category.icon}
+                options={category.options}
+                selectedValues={preferences[category.key] || []}
+                onChange={handleCheckboxChange}
+              />
+            ))}
+          </Form>
+
+          <div className="d-flex gap-3 justify-content-end mt-4">
+            <Button variant="outline-secondary" onClick={handleReset}>
+              Reset to Default
+            </Button>
+            <Button variant="primary" onClick={handleSave}>
+              Save Preferences
+            </Button>
           </div>
 
-          <Card className="mb-4">
-            <Card.Body className="p-5">
-              <Form>
-                {preferenceCategories.map((category) => (
-                  <FilterGroup
-                    key={category.key}
-                    category={category.key}
-                    label={category.label}
-                    icon={category.icon}
-                    options={category.options}
-                    selectedValues={preferences[category.key] || []}
-                    onChange={handleCheckboxChange}
-                  />
-                ))}
-              </Form>
-
-              <div className="d-flex gap-3 justify-content-end mt-4">
-                <Button variant="outline-secondary" onClick={handleReset}>
-                  Reset to Default
-                </Button>
-                <Button variant="primary" onClick={handleSave}>
-                  Save Preferences
-                </Button>
-              </div>
-
-              {saveStatus === "success" && (
-                <Alert variant="success" className="mt-4">
-                  Preferences saved successfully!
-                </Alert>
-              )}
-              {saveStatus === "error" && (
-                <Alert variant="danger" className="mt-4">
-                  Error saving preferences. Please try again.
-                </Alert>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          {saveStatus === "success" && (
+            <Alert variant="success" className="mt-4">
+              Preferences saved successfully!
+            </Alert>
+          )}
+          {saveStatus === "error" && (
+            <Alert variant="danger" className="mt-4">
+              Error saving preferences. Please try again.
+            </Alert>
+          )}
+        </Card.Body>
+      </Card>
     </Container>
   );
 }

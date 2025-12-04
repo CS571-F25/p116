@@ -9,6 +9,60 @@ const DEFAULT_PREFERENCES = {
   mealType: [],
 };
 
+export const preferenceCategories = [
+  {
+    key: "complexity",
+    label: "Cooking Complexity",
+    icon: "⏱️",
+    options: ["Easy", "Medium", "Hard"],
+  },
+  {
+    key: "spice",
+    label: "Spice Level",
+    icon: "🌶️",
+    options: ["Mild", "Medium", "Hot"],
+  },
+  {
+    key: "dietary",
+    label: "Dietary Restrictions",
+    icon: "🥗",
+    options: [
+      "Vegan",
+      "Vegetarian",
+      "Gluten-Free",
+      "Dairy-Free",
+      "Nut-Free",
+      "Keto",
+      "Paleo",
+      "Low-Carb",
+    ],
+  },
+  {
+    key: "cuisine",
+    label: "Cuisine Style",
+    icon: "🌍",
+    options: [
+      "Asian",
+      "American",
+      "Mexican",
+      "Mediterranean",
+      "Italian",
+      "French",
+      "Middle Eastern",
+      "Chinese",
+      "Japanese",
+      "Indian",
+      "Thai",
+    ],
+  },
+  {
+    key: "meal",
+    label: "Meal Type",
+    icon: "🍽️",
+    options: ["Breakfast", "Lunch", "Dinner", "Snack", "Dessert"],
+  },
+];
+
 // Get user preferences from localStorage
 export const getUserPreferences = () => {
   try {

@@ -23,7 +23,12 @@ export default function Saved() {
 
   return (
     <Container className="p-4">
-      <h5 className="section-heading mb-4">My Saved Recipes</h5>
+      {/* <h5 className="section-heading mb-4">My Saved Recipes</h5> */}
+      <Row className="my-2 my-md-4 text-center">
+        <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
+          Keep all your favorite recipes in one place
+        </p>
+      </Row>
       {savedRecipes.length > 0 ? (
         <Row className="g-3">
           {savedRecipes.map((recipe) => (
