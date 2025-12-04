@@ -8,11 +8,12 @@ export default function Navigation() {
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/saved", label: "Saved Recipes" },
+    { path: "/preference", label: "Preference" },
     { path: "/about", label: "About" },
   ];
 
   return (
-    <Navbar expand="lg" className="custom-navbar" variant="dark">
+    <Navbar expand="lg" className="custom-navbar" variant="dark" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">
           <span className="brand-icon">🧑‍🍳</span>

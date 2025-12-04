@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import RecipeCard from "./RecipeCard";
 import {
@@ -14,6 +15,7 @@ import {
   removeRecipe,
   getSavedRecipes,
 } from "../utils/savedRecipes";
+import { FaWandMagicSparkles } from "react-icons/fa6";
 
 export default function Home() {
   const [ingredients, setIngredients] = useState("");
@@ -195,7 +197,7 @@ export default function Home() {
               className="lead"
               style={{ color: "var(--color-warm-brown)", fontSize: "1.25rem" }}
             >
-              Turn your ingredients into delicious recipes 🍳✨
+              Turn your ingredients into delicious recipes ✨
             </p>
           </Row>
           <Row className="justify-content-center">
@@ -236,19 +238,17 @@ export default function Home() {
                         type="submit"
                         size="lg"
                         disabled={loading}
-                        className={loading ? "loading" : ""}
+                        className="d-flex align-items-center justify-content-center gap-2"
                       >
                         {loading ? (
                           <>
-                            <span
-                              className="spinner-border spinner-border-sm me-2"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
+                            <Spinner animation="border" size="sm" />
                             Generating Recipes...
                           </>
                         ) : (
-                          <>Generate Recipes</>
+                          <>
+                            <FaWandMagicSparkles /> Generate Recipes
+                          </>
                         )}
                       </Button>
                     </div>

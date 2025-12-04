@@ -2,6 +2,7 @@
   background: var(--gradient-primary) !important;
   box-shadow: 0 2px 12px rgba(92, 64, 51, 0.15);
   padding: 10px 0;
+  z-index: 1030;
 }
 
 .navbar-brand-custom {

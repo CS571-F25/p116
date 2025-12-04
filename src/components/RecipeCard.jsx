@@ -30,15 +30,11 @@ export default function RecipeCard({
 
   return (
     <>
-      <Card
-        className="recipe-card"
-        onClick={handleCardClick}
-        style={{ cursor: "pointer" }}
-      >
+      <Card className="recipe-card" onClick={handleCardClick}>
         <Card.Body className="p-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
+          <div className="d-flex justify-content-between align-items-start mb-3">
             <Card.Title
-              className="h5 mb-0"
+              className="h5 mb-0 me-2"
               style={{ color: "var(--color-warm-brown)", flex: 1 }}
             >
               {recipe.title}

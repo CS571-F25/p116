@@ -1,15 +1,34 @@
 #root {
   min-height: 100vh;
+  overflow: hidden;
 }
 
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Custom Card Styling */
 .card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   border-radius: 16px;
   overflow: hidden;
@@ -17,19 +36,21 @@ html {
   box-shadow: 0 2px 8px rgba(92, 64, 51, 0.08);
 }
 
-.card:hover {
+/* .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(255, 107, 53, 0.15);
-}
+} */
 
 /* Custom Button Styling */
+.btn {
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
 .btn-primary {
   background: var(--gradient-primary);
   border: none;
-  border-radius: 12px;
   padding: 12px 32px;
   font-weight: 600;
-  letter-spacing: 0.5px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
@@ -111,10 +132,13 @@ html {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 }
 
-.recipe-card:hover::before {
-  opacity: 1;
+.recipe-card:hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.15);
 }
 
 /* Badge Colors */
@@ -248,4 +272,53 @@ html {
 .accordion-body {
   background-color: white;
   color: var(--color-warm-brown);
+}
+
+/* Checkbox Styling */
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: 30px;
+}
+
+.preference-checkbox {
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.preference-checkbox .form-check-input {
+  border: 2px solid #d0d0d0;
+  border-radius: 6px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.preference-checkbox .form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.preference-checkbox .form-check-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+  outline: none;
+}
+
+.preference-checkbox .form-check-input:hover {
+  border-color: var(--color-primary-light);
+}
+
+.preference-checkbox .form-check-label {
+  cursor: pointer;
+  color: var(--color-warm-brown);
+  font-weight: 500;
+  margin-left: 8px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
 }

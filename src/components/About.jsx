@@ -45,7 +45,7 @@ export default function About() {
                 Hash! Whether you're a busy student trying to make the most of
                 your groceries or a professional short on time, SmartRecipe
                 helps you answer that age-old question: "What should I cook
-                today?" 🎉
+                today?"
               </Card.Text>
             </Card.Body>
           </Card>
