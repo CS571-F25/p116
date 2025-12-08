@@ -48,7 +48,7 @@ function App() {
               }
             />
             <Route
-              path="/preference"
+              path="/preferences"
               element={
                 <ProtectedRoute>
                   <Preference />

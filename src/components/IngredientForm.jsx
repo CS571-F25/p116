@@ -1,5 +1,6 @@
 import { Row, Col, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
 import { FaWandMagicSparkles } from "react-icons/fa6";
+import PreferencesDisplay from "./PreferencesDisplay";
 
 export default function IngredientForm({
   ingredients,
@@ -31,6 +32,8 @@ export default function IngredientForm({
                   Separate multiple ingredients with commas
                 </Form.Text>
               </Form.Group>
+
+              <PreferencesDisplay />
 
               {error && (
                 <Alert variant="danger" className="mb-3">

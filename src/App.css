@@ -274,6 +274,11 @@ body {
   color: var(--color-warm-brown);
 }
 
+/* Hide the accordion button arrow for the preferences accordion */
+/* .accordion-preferences .accordion-button::after {
+  display: none;
+} */
+
 /* Checkbox Styling */
 .filter-group {
   display: flex;

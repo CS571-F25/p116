@@ -11,7 +11,7 @@ export default function Navigation() {
   const navItems = [
     { path: "/", label: "Home", visible: true },
     { path: "/favorites", label: "My Recipes", visible: !!isAuthenticated },
-    { path: "/preference", label: "Preferences", visible: !!isAuthenticated },
+    { path: "/preferences", label: "Preferences", visible: !!isAuthenticated },
     { path: "/about", label: "About", visible: true },
     { path: "/login", label: "Login", visible: !isAuthenticated },
   ];
