@@ -1,37 +1,54 @@
 import { useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import RecipeCard from "./RecipeCard";
-import {
-  saveRecipe,
-  removeRecipe,
-  getSavedRecipes,
-} from "../utils/savedRecipes";
+import { recipeAPI } from "../services/api";
 
 export default function SuggestedRecipes({ recipes, onBack }) {
   const [savedRecipeIds, setSavedRecipeIds] = useState(new Set());
+  const [loading, setLoading] = useState(false);
 
   // Load saved recipe IDs when recipes change
   useEffect(() => {
     if (recipes.length > 0) {
-      const saved = getSavedRecipes();
-      const savedIds = new Set(saved.map((r) => r.id));
-      setSavedRecipeIds(savedIds);
+      loadSavedRecipes();
     }
   }, [recipes]);
 
-  const handleSaveRecipe = (recipe) => {
-    if (saveRecipe(recipe)) {
-      setSavedRecipeIds((prev) => new Set([...prev, recipe.id]));
+  const loadSavedRecipes = async () => {
+    try {
+      const saved = await recipeAPI.getSavedRecipes();
+      const savedIds = new Set(saved.map((r) => r._id || r.id));
+      setSavedRecipeIds(savedIds);
+    } catch (err) {
+      console.error('Error loading saved recipes:', err);
     }
   };
 
-  const handleUnsaveRecipe = (recipeId) => {
-    if (removeRecipe(recipeId)) {
+  const handleSaveRecipe = async (recipe) => {
+    try {
+      setLoading(true);
+      const savedRecipe = await recipeAPI.saveRecipe(recipe);
+      setSavedRecipeIds((prev) => new Set([...prev, savedRecipe._id || recipe.id]));
+    } catch (err) {
+      console.error('Error saving recipe:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnsaveRecipe = async (recipeId) => {
+    try {
+      setLoading(true);
+      await recipeAPI.deleteRecipe(recipeId);
       setSavedRecipeIds((prev) => {
         const newSet = new Set(prev);
         newSet.delete(recipeId);
         return newSet;
       });
+    } catch (err) {
+      console.error('Error deleting recipe:', err);
+    } finally {
+      setLoading(false);
     }
   };
 

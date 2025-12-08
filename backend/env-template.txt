@@ -1,0 +1,19 @@
+# Server Configuration
+PORT=3001
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+
+# Database
+MONGODB_URI=mongodb://localhost:27017/recipe-app
+# Or use MongoDB Atlas:
+# MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/recipe-app?retryWrites=true&w=majority
+
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key_here
+
+# JWT Secret (generate a random string)
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
+
+# JWT Expiration
+JWT_EXPIRE=7d
+

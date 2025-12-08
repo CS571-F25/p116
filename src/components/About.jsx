@@ -52,7 +52,7 @@ export default function About() {
 
           <Row>
             <Col md={6} className="mb-4">
-              <Card className="h-100 recipe-card">
+              <Card className="h-100">
                 <Card.Body className="p-4">
                   <Card.Title
                     className="h5 mb-4"
@@ -80,15 +80,15 @@ export default function About() {
                     </li>
                     <li className="mb-3" style={{ lineHeight: "1.7" }}>
                       <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Save/Favorite:
+                        Save Recipes:
                       </strong>{" "}
                       <span style={{ color: "var(--color-warm-brown)" }}>
-                        Save your favorite recipes for later
+                        Keep all your favorite recipes in one place
                       </span>
                     </li>
                     <li style={{ lineHeight: "1.7" }}>
                       <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Preference Modes:
+                        Preference Mode:
                       </strong>{" "}
                       <span style={{ color: "var(--color-warm-brown)" }}>
                         Filter by dietary restrictions, cuisine style, and more
@@ -100,7 +100,7 @@ export default function About() {
             </Col>
 
             <Col md={6} className="mb-4">
-              <Card className="h-100 recipe-card">
+              <Card className="h-100">
                 <Card.Body className="p-4">
                   <Card.Title
                     className="h5 mb-4"

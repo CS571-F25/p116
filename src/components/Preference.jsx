@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -7,18 +7,40 @@ import {
   Form,
   Button,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import {
   getUserPreferences,
   saveUserPreferences,
-  resetPreferences,
   preferenceCategories,
 } from "../utils/preferences";
+import { preferencesAPI } from "../services/api";
 import FilterGroup from "./FilterGroup";
 
 export default function Preference() {
   const [preferences, setPreferences] = useState(getUserPreferences);
   const [saveStatus, setSaveStatus] = useState(""); // 'success' or 'error'
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadPreferences();
+  }, []);
+
+  const loadPreferences = async () => {
+    try {
+      const apiPrefs = await preferencesAPI.getPreferences();
+      setPreferences(apiPrefs);
+      // Also save to localStorage for offline access
+      saveUserPreferences(apiPrefs);
+    } catch (err) {
+      console.error("Error loading preferences:", err);
+      // Fall back to localStorage if API fails
+      const localPrefs = getUserPreferences();
+      setPreferences(localPrefs);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCheckboxChange = (category, value) => {
     setPreferences((prev) => {
@@ -34,22 +56,25 @@ export default function Preference() {
     });
   };
 
-  const handleSave = () => {
-    const success = saveUserPreferences(preferences);
-    if (success) {
+  const handleSave = async () => {
+    try {
+      await preferencesAPI.updatePreferences(preferences);
+      saveUserPreferences(preferences); // Also save to localStorage
       handleAlert("success");
-    } else {
+    } catch (err) {
+      console.error("Error saving preferences:", err);
       handleAlert("error");
     }
   };
 
-  const handleReset = () => {
-    const success = resetPreferences();
-    if (success) {
-      const defaultPrefs = getUserPreferences();
+  const handleReset = async () => {
+    try {
+      const defaultPrefs = await preferencesAPI.resetPreferences();
       setPreferences(defaultPrefs);
+      saveUserPreferences(defaultPrefs); // Also save to localStorage
       handleAlert("success");
-    } else {
+    } catch (err) {
+      console.error("Error resetting preferences:", err);
       handleAlert("error");
     }
   };
@@ -58,6 +83,16 @@ export default function Preference() {
     setSaveStatus(status);
     setTimeout(() => setSaveStatus(""), 3000);
   };
+
+  if (loading) {
+    return (
+      <Container className="p-4 text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
 
   return (
     <Container className="fluid p-4">
@@ -68,7 +103,7 @@ export default function Preference() {
         </p>
       </Row>
 
-      <Card className="mb-4">
+      <Card className="mb-4 mx-auto">
         <Card.Body className="p-4 p-md-5">
           <Form>
             {preferenceCategories.map((category) => (
@@ -86,7 +121,7 @@ export default function Preference() {
 
           <div className="d-flex gap-3 justify-content-end mt-4">
             <Button variant="outline-secondary" onClick={handleReset}>
-              Reset to Default
+              Reset
             </Button>
             <Button variant="primary" onClick={handleSave}>
               Save Preferences

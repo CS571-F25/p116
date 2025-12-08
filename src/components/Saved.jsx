@@ -1,25 +1,49 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Alert } from "react-bootstrap";
+import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import RecipeCard from "./RecipeCard";
-import { getSavedRecipes, removeRecipe } from "../utils/savedRecipes";
+import { recipeAPI } from "../services/api";
 
 export default function Saved() {
   const [savedRecipes, setSavedRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     loadSavedRecipes();
   }, []);
 
-  const loadSavedRecipes = () => {
-    const saved = getSavedRecipes();
-    setSavedRecipes(saved);
-  };
-
-  const handleUnsaveRecipe = (recipeId) => {
-    if (removeRecipe(recipeId)) {
-      loadSavedRecipes(); // Reload after removing
+  const loadSavedRecipes = async () => {
+    try {
+      setLoading(true);
+      const recipes = await recipeAPI.getSavedRecipes();
+      setSavedRecipes(recipes);
+    } catch (err) {
+      console.error("Error loading saved recipes:", err);
+      setError(err.message || "Failed to load saved recipes");
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleUnsaveRecipe = async (recipeId) => {
+    try {
+      await recipeAPI.deleteRecipe(recipeId);
+      loadSavedRecipes(); // Reload after removing
+    } catch (err) {
+      console.error("Error deleting recipe:", err);
+      setError(err.message || "Failed to delete recipe");
+    }
+  };
+
+  if (loading) {
+    return (
+      <Container className="p-4 text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
 
   return (
     <Container className="p-4">
@@ -29,10 +53,17 @@ export default function Saved() {
           Keep all your favorite recipes in one place
         </p>
       </Row>
+
+      {error && (
+        <Alert variant="danger" className="mb-3">
+          {error}
+        </Alert>
+      )}
+
       {savedRecipes.length > 0 ? (
         <Row className="g-3">
           {savedRecipes.map((recipe) => (
-            <Col key={recipe.id} xs={12} sm={6} md={6} lg={4}>
+            <Col key={recipe._id || recipe.id} xs={12} sm={6} md={6} lg={4}>
               <RecipeCard
                 recipe={recipe}
                 isSaved={true}
@@ -42,12 +73,8 @@ export default function Saved() {
           ))}
         </Row>
       ) : (
-        <div
-          className="text-center"
-          style={{ color: "var(--color-warm-brown)" }}
-        >
-          <p>No saved recipes yet.</p>
-          <p>Start saving recipes from the Home page!</p>
+        <div className="text-center text-muted">
+          <p>No saved recipes.</p>
         </div>
       )}
     </Container>

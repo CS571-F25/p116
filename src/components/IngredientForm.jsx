@@ -15,7 +15,7 @@ export default function IngredientForm({
           <Card.Body className="p-4">
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label className="h6 mb-2">
+                <Form.Label className="h6 mb-3">
                   What ingredients do you have?
                 </Form.Label>
                 <Form.Control
@@ -28,7 +28,7 @@ export default function IngredientForm({
                   style={{ fontSize: "16px", resize: "none" }}
                 />
                 <Form.Text className="text-muted mt-2 d-block">
-                  💡 Separate multiple ingredients with commas
+                  Separate multiple ingredients with commas
                 </Form.Text>
               </Form.Group>
 
