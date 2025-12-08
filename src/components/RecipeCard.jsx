@@ -4,20 +4,30 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import RecipeModal from "./RecipeModal";
 
-export default function RecipeCard({
-  recipe,
-  isSaved = false,
-  onSave,
-  onUnsave,
-}) {
+export default function RecipeCard({ recipe, onSave, onUnsave }) {
   const [showModal, setShowModal] = useState(false);
+  const [isSaved, setIsSaved] = useState(!!recipe.isSaved);
+  const [loading, setLoading] = useState(false);
 
-  const handleSaveClick = (e) => {
+  const handleSave = async (e) => {
     e.stopPropagation();
+    if (loading) return;
+    if (!isSaved && onSave) {
+      setLoading(true);
+      const success = await onSave(recipe.id);
+      setLoading(false);
+      success && setIsSaved(true);
+    }
+  };
+
+  const handleUnsave = async (e) => {
+    e.stopPropagation();
+    if (loading) return;
     if (isSaved && onUnsave) {
-      onUnsave(recipe.id);
-    } else if (!isSaved && onSave) {
-      onSave(recipe);
+      setLoading(true);
+      const success = await onUnsave(recipe.id);
+      setLoading(false);
+      success && setIsSaved(false);
     }
   };
 
@@ -40,25 +50,41 @@ export default function RecipeCard({
             >
               {recipe.title}
             </Card.Title>
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip>{isSaved ? "Unsave" : "Save"}</Tooltip>}
-            >
-              <div
-                onClick={handleSaveClick}
-                style={{
-                  cursor: "pointer",
-                  fontSize: "1.5rem",
-                  color: "var(--color-primary)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+            {isSaved ? (
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250 }}
+                overlay={<Tooltip>Remove from My Recipes</Tooltip>}
               >
-                {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
-                {/* {isSaved ? <FaHeart /> : <FaRegHeart />} */}
-              </div>
-            </OverlayTrigger>
+                <div
+                  onClick={handleUnsave}
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "1.5rem",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  <FaHeart />
+                </div>
+              </OverlayTrigger>
+            ) : (
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={<Tooltip>Save to My Recipes</Tooltip>}
+              >
+                <div
+                  onClick={handleSave}
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "1.5rem",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  <FaRegHeart />
+                </div>
+              </OverlayTrigger>
+            )}
           </div>
           <div className="d-flex gap-2 mb-3 flex-wrap">
             <span className="badge badge-time">⏱️ {recipe.prepTime}</span>
@@ -87,7 +113,7 @@ export default function RecipeCard({
         show={showModal}
         onHide={handleCloseModal}
         isSaved={isSaved}
-        onSave={handleSaveClick}
+        onSave={handleSave}
       />
     </>
   );

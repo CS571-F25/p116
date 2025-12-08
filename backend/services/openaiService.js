@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { randomUUID } from "crypto";
 
 let openaiClent;
 
@@ -52,10 +53,10 @@ export const generateRecipes = async (ingredients, preferences = {}) => {
       throw new Error("Invalid response format from OpenAI");
     }
 
-    // Ensure we have exactly 3 recipes and add IDs
-    recipes = recipes.slice(0, 3).map((recipe, index) => ({
+    // Ensure we have exactly 3 recipes and add UUIDs
+    recipes = recipes.slice(0, 3).map((recipe) => ({
       ...recipe,
-      id: Date.now() + index,
+      id: randomUUID(),
       generatedFrom: ingredients.split(",").map((i) => i.trim()),
     }));
 
@@ -79,25 +80,25 @@ export const generateRecipes = async (ingredients, preferences = {}) => {
 const buildPrompt = (ingredients, preferences) => {
   let prompt = `Generate 3 unique and delicious recipes using these ingredients: ${ingredients}.\n\n`;
 
-  if (preferences.complexity && preferences.complexity.length > 0) {
+  if (preferences.complexity?.length > 0) {
     prompt += `Preferred cooking complexity: ${preferences.complexity.join(
       ", "
     )}.\n`;
   }
 
-  if (preferences.spice && preferences.spice.length > 0) {
+  if (preferences.spice?.length > 0) {
     prompt += `Preferred spice level: ${preferences.spice.join(", ")}.\n`;
   }
 
-  if (preferences.dietary && preferences.dietary.length > 0) {
+  if (preferences.dietary?.length > 0) {
     prompt += `Dietary restrictions: ${preferences.dietary.join(", ")}.\n`;
   }
 
-  if (preferences.cuisine && preferences.cuisine.length > 0) {
+  if (preferences.cuisine?.length > 0) {
     prompt += `Preferred cuisine styles: ${preferences.cuisine.join(", ")}.\n`;
   }
 
-  if (preferences.meal && preferences.meal.length > 0) {
+  if (preferences.meal?.length > 0) {
     prompt += `Meal type: ${preferences.meal.join(", ")}.\n`;
   }
 
@@ -114,7 +115,7 @@ const getFallbackRecipes = (ingredients) => {
 
   return [
     {
-      id: Date.now(),
+      id: randomUUID(),
       title: `Simple ${ingredientList[0] || "Ingredient"} Dish`,
       description:
         "A quick and easy recipe using your ingredients. This is a fallback recipe while we're experiencing API issues.",
@@ -136,7 +137,7 @@ const getFallbackRecipes = (ingredients) => {
       generatedFrom: ingredientList,
     },
     {
-      id: Date.now() + 1,
+      id: randomUUID(),
       title: `Roasted ${ingredientList[0] || "Ingredient"} Medley`,
       description:
         "A flavorful roasted dish that's simple to prepare. This is a fallback recipe while we're experiencing API issues.",
@@ -158,7 +159,7 @@ const getFallbackRecipes = (ingredients) => {
       generatedFrom: ingredientList,
     },
     {
-      id: Date.now() + 2,
+      id: randomUUID(),
       title: `${ingredientList[0] || "Ingredient"} Stir-Fry`,
       description:
         "A versatile stir-fry that works with many ingredients. This is a fallback recipe while we're experiencing API issues.",

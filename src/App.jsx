@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import About from "./components/About";
-import Saved from "./components/Saved";
+import Saved from "./components/MyRecipes";
 import Preference from "./components/Preference";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -40,7 +40,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/" element={<Home />} />
             <Route
-              path="/saved"
+              path="/favorites"
               element={
                 <ProtectedRoute>
                   <Saved />

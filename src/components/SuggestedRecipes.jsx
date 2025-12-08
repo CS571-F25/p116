@@ -5,7 +5,6 @@ import { recipeAPI } from "../services/api";
 
 export default function SuggestedRecipes({ recipes, onBack }) {
   const [savedRecipeIds, setSavedRecipeIds] = useState(new Set());
-  const [loading, setLoading] = useState(false);
 
   // Load saved recipe IDs when recipes change
   useEffect(() => {
@@ -20,35 +19,35 @@ export default function SuggestedRecipes({ recipes, onBack }) {
       const savedIds = new Set(saved.map((r) => r._id || r.id));
       setSavedRecipeIds(savedIds);
     } catch (err) {
-      console.error('Error loading saved recipes:', err);
+      console.error("Error loading saved recipes:", err);
     }
   };
 
   const handleSaveRecipe = async (recipe) => {
     try {
-      setLoading(true);
       const savedRecipe = await recipeAPI.saveRecipe(recipe);
-      setSavedRecipeIds((prev) => new Set([...prev, savedRecipe._id || recipe.id]));
+      setSavedRecipeIds(
+        (prev) => new Set([...prev, savedRecipe._id || recipe.id])
+      );
+      return true;
     } catch (err) {
-      console.error('Error saving recipe:', err);
-    } finally {
-      setLoading(false);
+      console.error("Error saving recipe:", err);
+      return false;
     }
   };
 
   const handleUnsaveRecipe = async (recipeId) => {
     try {
-      setLoading(true);
       await recipeAPI.deleteRecipe(recipeId);
       setSavedRecipeIds((prev) => {
         const newSet = new Set(prev);
         newSet.delete(recipeId);
         return newSet;
       });
+      return true;
     } catch (err) {
-      console.error('Error deleting recipe:', err);
-    } finally {
-      setLoading(false);
+      console.error("Error deleting recipe:", err);
+      return false;
     }
   };
 

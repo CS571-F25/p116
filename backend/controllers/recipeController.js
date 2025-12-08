@@ -134,7 +134,7 @@ export const getRecipe = async (req, res) => {
 };
 
 /**
- * Unsave/delete a recipe
+ * Unsave/delete a recipe (soft delete)
  * DELETE /api/recipes/:id
  */
 export const deleteRecipe = async (req, res) => {
@@ -151,12 +151,14 @@ export const deleteRecipe = async (req, res) => {
       });
     }
 
-    await recipe.deleteOne();
+    // Soft delete: set isSaved to false instead of deleting
+    recipe.isSaved = false;
+    await recipe.save();
 
     res.json({
       success: true,
       data: {},
-      message: "Recipe deleted successfully",
+      message: "Recipe removed from My Recipes",
     });
   } catch (error) {
     res.status(500).json({
