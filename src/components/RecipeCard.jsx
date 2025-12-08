@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import RecipeModal from "./RecipeModal";
 
 export default function RecipeCard({
@@ -55,6 +56,7 @@ export default function RecipeCard({
                 }}
               >
                 {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
+                {/* {isSaved ? <FaHeart /> : <FaRegHeart />} */}
               </div>
             </OverlayTrigger>
           </div>
