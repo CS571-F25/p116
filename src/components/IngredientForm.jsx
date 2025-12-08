@@ -1,6 +1,7 @@
 import { Row, Col, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaWandMagicSparkles, FaLock } from "react-icons/fa6";
 import PreferencesDisplay from "./PreferencesDisplay";
+import { useAuth } from "../context/AuthContext";
 
 export default function IngredientForm({
   ingredients,
@@ -9,6 +10,8 @@ export default function IngredientForm({
   error,
   onSubmit,
 }) {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Row className="justify-content-center">
       <Col md={8} lg={6}>
@@ -33,7 +36,7 @@ export default function IngredientForm({
                 </Form.Text>
               </Form.Group>
 
-              <PreferencesDisplay />
+              {isAuthenticated && <PreferencesDisplay />}
 
               {error && (
                 <Alert variant="danger" className="mb-3">
@@ -46,10 +49,15 @@ export default function IngredientForm({
                   variant="primary"
                   type="submit"
                   size="lg"
-                  disabled={loading}
+                  disabled={!isAuthenticated || loading}
                   className="d-flex align-items-center justify-content-center gap-2"
                 >
-                  {loading ? (
+                  {!isAuthenticated ? (
+                    <>
+                      <FaLock />
+                      Log In to Generate Recipes
+                    </>
+                  ) : loading ? (
                     <>
                       <Spinner animation="border" size="sm" />
                       Generating Recipes...

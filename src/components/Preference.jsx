@@ -19,7 +19,7 @@ import FilterGroup from "./FilterGroup";
 
 export default function Preference() {
   const [preferences, setPreferences] = useState(getUserPreferences);
-  const [saveStatus, setSaveStatus] = useState(""); // 'success' or 'error'
+  const [saveStatus, setSaveStatus] = useState(null); // 'success' or 'error'
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function Preference() {
   };
 
   const handleCheckboxChange = (category, value) => {
+    setSaveStatus(null);
     setPreferences((prev) => {
       const currentArray = prev[category] || [];
       const isSelected = currentArray.includes(value);
@@ -60,10 +61,10 @@ export default function Preference() {
     try {
       await preferencesAPI.updatePreferences(preferences);
       saveUserPreferences(preferences); // Also save to localStorage
-      handleAlert("success");
+      setSaveStatus("success");
     } catch (err) {
       console.error("Error saving preferences:", err);
-      handleAlert("error");
+      setSaveStatus("error");
     }
   };
 
@@ -72,16 +73,11 @@ export default function Preference() {
       const defaultPrefs = await preferencesAPI.resetPreferences();
       setPreferences(defaultPrefs);
       saveUserPreferences(defaultPrefs); // Also save to localStorage
-      handleAlert("success");
+      setSaveStatus("success");
     } catch (err) {
       console.error("Error resetting preferences:", err);
-      handleAlert("error");
+      setSaveStatus("error");
     }
-  };
-
-  const handleAlert = (status) => {
-    setSaveStatus(status);
-    setTimeout(() => setSaveStatus(""), 3000);
   };
 
   if (loading) {
@@ -95,7 +91,7 @@ export default function Preference() {
   }
 
   return (
-    <Container className="fluid p-4">
+    <Container className="p-4 w-responsive-75">
       {/* <h5 className="section-heading mb-4">Preferences</h5> */}
       <Row className="my-2 my-md-4 text-center">
         <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
