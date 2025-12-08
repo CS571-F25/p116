@@ -1,8 +1,38 @@
 import { useState } from "react";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { HiHeart, HiOutlineHeart } from "react-icons/hi";
+import { HiMiniChartBar } from "react-icons/hi2";
+import { IoTime } from "react-icons/io5";
+import { FaFire } from "react-icons/fa";
 import RecipeModal from "./RecipeModal";
+
+export function AttributeList({ recipe }) {
+  return (
+    <div className="d-flex gap-2 mb-3 flex-wrap">
+      <span className="badge badge-difficulty">
+        <HiMiniChartBar /> {recipe.difficulty}
+      </span>
+      <span className="badge badge-time">
+        <IoTime /> {recipe.prepTime}
+      </span>
+      <span className="badge badge-calories">
+        <FaFire /> {recipe.calories} cal
+      </span>
+    </div>
+  );
+}
+
+export function TagList({ tags }) {
+  return (
+    <div className="d-flex gap-2 flex-wrap">
+      {tags.map((tag) => (
+        <span key={tag} className="badge badge-tag">
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export default function RecipeCard({ recipe, onSave, onUnsave }) {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +44,7 @@ export default function RecipeCard({ recipe, onSave, onUnsave }) {
     if (loading) return;
     if (!isSaved && onSave) {
       setLoading(true);
-      const success = await onSave(recipe.id);
+      const success = await onSave(recipe);
       setLoading(false);
       success && setIsSaved(true);
     }
@@ -50,62 +80,36 @@ export default function RecipeCard({ recipe, onSave, onUnsave }) {
             >
               {recipe.title}
             </Card.Title>
-            {isSaved ? (
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250 }}
-                overlay={<Tooltip>Remove from My Recipes</Tooltip>}
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250 }}
+              overlay={
+                <Tooltip>
+                  {isSaved ? "Remove from My Recipes" : "Save to My Recipes"}
+                </Tooltip>
+              }
+            >
+              <div
+                onClick={isSaved ? handleUnsave : handleSave}
+                style={{
+                  cursor: "pointer",
+                  fontSize: "28px",
+                  color: "var(--color-primary)",
+                  lineHeight: 0,
+                }}
               >
-                <div
-                  onClick={handleUnsave}
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "1.5rem",
-                    color: "var(--color-primary)",
-                  }}
-                >
-                  <FaHeart />
-                </div>
-              </OverlayTrigger>
-            ) : (
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={<Tooltip>Save to My Recipes</Tooltip>}
-              >
-                <div
-                  onClick={handleSave}
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "1.5rem",
-                    color: "var(--color-primary)",
-                  }}
-                >
-                  <FaRegHeart />
-                </div>
-              </OverlayTrigger>
-            )}
+                {isSaved ? <HiHeart /> : <HiOutlineHeart />}
+              </div>
+            </OverlayTrigger>
           </div>
-          <div className="d-flex gap-2 mb-3 flex-wrap">
-            <span className="badge badge-time">⏱️ {recipe.prepTime}</span>
-            <span className="badge badge-difficulty">{recipe.difficulty}</span>
-            <span className="badge badge-calories">
-              🔥 {recipe.calories} cal
-            </span>
-          </div>
+          <AttributeList recipe={recipe} />
           <Card.Text
             className="text-muted mb-3"
             style={{ minHeight: "40px", fontSize: "0.9rem" }}
           >
             {recipe.description}
           </Card.Text>
-          <div className="d-flex gap-2 flex-wrap">
-            {recipe.tags.map((tag, idx) => (
-              <span key={idx} className="badge badge-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
+          <TagList tags={recipe.tags} />
         </Card.Body>
       </Card>
       <RecipeModal

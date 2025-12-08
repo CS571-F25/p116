@@ -1,4 +1,5 @@
-import { Modal, Badge, Accordion } from "react-bootstrap";
+import { Modal, Accordion } from "react-bootstrap";
+import { AttributeList, TagList } from "./RecipeCard";
 
 export default function RecipeModal({
   recipe,
@@ -25,28 +26,14 @@ export default function RecipeModal({
       </Modal.Header>
 
       <Modal.Body>
-        <div className="d-flex gap-2 mb-3 flex-wrap">
-          <Badge className="badge badge-time">⏱️ {recipe.prepTime}</Badge>
-          <Badge className="badge badge-difficulty">{recipe.difficulty}</Badge>
-          <Badge className="badge badge-calories">
-            🔥 {recipe.calories} cal
-          </Badge>
-        </div>
+        <AttributeList recipe={recipe} />
         <div className="mb-2">
           <p className="text-muted" style={{ fontSize: "1rem" }}>
             {recipe.description}
           </p>
         </div>
-        {recipe.tags?.length > 0 && (
-          <div className="d-flex gap-2 flex-wrap mb-4">
-            {recipe.tags.map((tag, idx) => (
-              <Badge key={idx} bg="#fff8f0" className="badge badge-tag">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
-        <Accordion defaultActiveKey="ingredients" className="mb-3">
+        <TagList tags={recipe.tags} />
+        <Accordion defaultActiveKey="ingredients" className="my-3">
           {recipe.ingredients?.length > 0 && (
             <Accordion.Item eventKey="ingredients">
               <Accordion.Header>
