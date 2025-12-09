@@ -1,5 +1,7 @@
 import { Row, Col, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaWandMagicSparkles, FaLock } from "react-icons/fa6";
+import PreferencesDisplay from "./PreferencesDisplay";
+import { useAuth } from "../context/AuthContext";
 
 export default function IngredientForm({
   ingredients,
@@ -8,6 +10,8 @@ export default function IngredientForm({
   error,
   onSubmit,
 }) {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Row className="justify-content-center">
       <Col md={8} lg={6}>
@@ -15,7 +19,7 @@ export default function IngredientForm({
           <Card.Body className="p-4">
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label className="h6 mb-2">
+                <Form.Label className="h6 mb-3">
                   What ingredients do you have?
                 </Form.Label>
                 <Form.Control
@@ -28,9 +32,11 @@ export default function IngredientForm({
                   style={{ fontSize: "16px", resize: "none" }}
                 />
                 <Form.Text className="text-muted mt-2 d-block">
-                  💡 Separate multiple ingredients with commas
+                  Separate multiple ingredients with commas
                 </Form.Text>
               </Form.Group>
+
+              {isAuthenticated && <PreferencesDisplay />}
 
               {error && (
                 <Alert variant="danger" className="mb-3">
@@ -43,10 +49,15 @@ export default function IngredientForm({
                   variant="primary"
                   type="submit"
                   size="lg"
-                  disabled={loading}
+                  disabled={!isAuthenticated || loading}
                   className="d-flex align-items-center justify-content-center gap-2"
                 >
-                  {loading ? (
+                  {!isAuthenticated ? (
+                    <>
+                      <FaLock />
+                      Log In to Generate Recipes
+                    </>
+                  ) : loading ? (
                     <>
                       <Spinner animation="border" size="sm" />
                       Generating Recipes...

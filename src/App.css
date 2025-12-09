@@ -97,6 +97,9 @@ body {
   padding: 6px 12px;
   font-weight: 500;
   font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Alert Styling */
@@ -106,7 +109,7 @@ body {
 }
 
 .alert-danger {
-  background-color: #fff5f5;
+  /* background-color: #fff5f5; */
   color: var(--color-warm-red);
 }
 
@@ -274,6 +277,11 @@ body {
   color: var(--color-warm-brown);
 }
 
+/* Hide the accordion button arrow for the preferences accordion */
+/* .accordion-preferences .accordion-button::after {
+  display: none;
+} */
+
 /* Checkbox Styling */
 .filter-group {
   display: flex;
@@ -318,4 +326,48 @@ body {
   line-height: 20px;
   display: flex;
   align-items: center;
+}
+
+/* Responsive width utility */
+.w-responsive-75 {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .w-responsive-75 {
+    width: 75%;
+  }
+}
+
+/* Search Bar Styling */
+.search-bar-container {
+  position: relative;
+  max-width: 600px;
+}
+
+.search-bar-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-primary);
+  opacity: 0.8;
+  font-size: 1.2rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.search-bar-input {
+  padding-left: 45px;
+  padding-right: 16px;
+  height: 48px;
+  border-radius: 24px;
+  border: 1px solid #dee2e6;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-bar-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
 }

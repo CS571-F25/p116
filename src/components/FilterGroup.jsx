@@ -14,7 +14,7 @@ export default function FilterGroup({
         {icon && <span className="me-2">{icon}</span>}
         {label}
       </Form.Label>
-      <Row className="filter-group g-2">
+      <Row className="filter-group g-2 align-items-center">
         {options.map((option) => (
           <Col key={option} xs={6} sm={6} md={4} lg={3} xl={2}>
             <Form.Check
