@@ -177,6 +177,7 @@ body {
 /* Section Headings */
 .section-heading {
   color: var(--color-warm-brown);
+  font-size: 1.25rem;
   font-weight: 600;
   margin: 18px 0;
   position: relative;

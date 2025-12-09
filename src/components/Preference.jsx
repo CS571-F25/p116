@@ -93,7 +93,6 @@ export default function Preference() {
   return (
     <Container className="p-4 w-responsive-75">
       <ToastComponent />
-      {/* <h5 className="section-heading mb-4">Preferences</h5> */}
       <Row className="my-2 my-md-4 text-center">
         <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
           Customize your recipe recommendations 🪄

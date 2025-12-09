@@ -60,12 +60,12 @@ export default function Signup() {
         <Col xs={12} md={6} lg={5}>
           <Card>
             <Card.Body className="p-4">
-              <h2
-                className="text-center mb-4"
+              <h1
+                className="h2 text-center mb-4"
                 style={{ color: "var(--color-warm-brown)" }}
               >
                 Create Account
-              </h2>
+              </h1>
 
               {error && <Alert variant="danger">{error}</Alert>}
 

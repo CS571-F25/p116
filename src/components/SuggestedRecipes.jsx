@@ -5,7 +5,7 @@ export default function SuggestedRecipes({ recipes, onBack }) {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="section-heading">✨ Suggested Recipes</h4>
+        <div className="section-heading">✨ Suggested Recipes</div>
         <Button variant="outline-secondary" onClick={onBack}>
           ← Back
         </Button>

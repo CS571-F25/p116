@@ -13,13 +13,13 @@ export function AttributeList({ recipe }) {
   return (
     <div className="d-flex gap-2 mb-3 flex-wrap">
       <span className="badge badge-difficulty">
-        <HiMiniChartBar /> {recipe.difficulty}
+        <HiMiniChartBar aria-hidden="true" /> {recipe.difficulty}
       </span>
       <span className="badge badge-time">
-        <IoTime /> {recipe.prepTime}
+        <IoTime aria-hidden="true" /> {recipe.prepTime}
       </span>
       <span className="badge badge-calories">
-        <FaFire /> {recipe.calories} cal
+        <FaFire aria-hidden="true" /> {recipe.calories} cal
       </span>
     </div>
   );
@@ -100,10 +100,17 @@ export default function RecipeCard({ recipe, onSaveSuccess, onUnsaveSuccess }) {
   return (
     <>
       <ToastComponent />
-      <Card className="recipe-card" onClick={handleCardClick}>
+      <Card
+        className="recipe-card"
+        onClick={handleCardClick}
+        tabIndex={0}
+        role="button"
+        aria-label={`View details for ${recipe.title}`}
+      >
         <Card.Body className="p-4">
           <div className="d-flex justify-content-between align-items-start mb-3">
             <Card.Title
+              as="h3"
               className="h5 mb-0 me-2"
               style={{ color: "var(--color-warm-brown)", flex: 1 }}
             >
@@ -119,18 +126,29 @@ export default function RecipeCard({ recipe, onSaveSuccess, onUnsaveSuccess }) {
                   </Tooltip>
                 }
               >
-                <div
+                <button
+                  type="button"
                   onClick={isSaved ? handleUnsave : handleSave}
+                  disabled={loading}
+                  aria-label={
+                    isSaved ? "Remove from My Recipes" : "Save to My Recipes"
+                  }
                   style={{
                     cursor: loading ? "wait" : "pointer",
                     fontSize: "28px",
                     color: "var(--color-primary)",
                     lineHeight: 0,
                     opacity: loading ? 0.6 : 1,
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   {isSaved ? <HiHeart /> : <HiOutlineHeart />}
-                </div>
+                </button>
               </OverlayTrigger>
             )}
           </div>

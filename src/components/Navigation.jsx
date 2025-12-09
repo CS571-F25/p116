@@ -18,30 +18,35 @@ export default function Navigation() {
   const { isAuthenticated, user, logout } = useAuth();
 
   const navItems = [
-    { path: "/", label: "Home", visible: true, icon: <HiOutlineHome /> },
+    {
+      path: "/",
+      label: "Home",
+      visible: true,
+      icon: <HiOutlineHome aria-hidden="true" />,
+    },
     {
       path: "/explore",
       label: "Explore",
       visible: true,
-      icon: <HiOutlineGlobeAlt />,
+      icon: <HiOutlineGlobeAlt aria-hidden="true" />,
     },
     {
       path: "/favorites",
       label: "My Recipes",
       visible: !!isAuthenticated,
-      icon: <HiOutlineCube />,
+      icon: <HiOutlineCube aria-hidden="true" />,
     },
     {
       path: "/preferences",
       label: "Preferences",
       visible: !!isAuthenticated,
-      icon: <HiOutlineViewGrid />,
+      icon: <HiOutlineViewGrid aria-hidden="true" />,
     },
     {
       path: "/about",
       label: "About",
       visible: true,
-      icon: <HiOutlineInformationCircle />,
+      icon: <HiOutlineInformationCircle aria-hidden="true" />,
     },
     { path: "/login", label: "Login", visible: !isAuthenticated },
   ];
@@ -84,7 +89,7 @@ export default function Navigation() {
                 title={
                   <>
                     <span className="nav-icon">
-                      <HiOutlineUserCircle />
+                      <HiOutlineUserCircle aria-hidden="true" />
                     </span>{" "}
                     {user?.name || "User"}
                   </>
@@ -107,7 +112,8 @@ export default function Navigation() {
                     fontSize: "15px",
                   }}
                 >
-                  <LogoutIcon style={{ marginRight: 2 }} /> Logout
+                  <LogoutIcon style={{ marginRight: 2 }} aria-hidden="true" />{" "}
+                  Logout
                 </NavDropdown.Item>
               </NavDropdown>
             )}

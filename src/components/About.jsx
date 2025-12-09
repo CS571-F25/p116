@@ -15,6 +15,7 @@ export default function About() {
           <Card className="mb-5">
             <Card.Body className="p-5">
               <Card.Title
+                as="h2"
                 className="h4 mb-4"
                 style={{ color: "var(--color-primary)" }}
               >
@@ -55,6 +56,7 @@ export default function About() {
               <Card className="h-100">
                 <Card.Body className="p-4">
                   <Card.Title
+                    as="h3"
                     className="h5 mb-4"
                     style={{ color: "var(--color-primary)" }}
                   >
@@ -103,6 +105,7 @@ export default function About() {
               <Card className="h-100">
                 <Card.Body className="p-4">
                   <Card.Title
+                    as="h3"
                     className="h5 mb-4"
                     style={{ color: "var(--color-primary)" }}
                   >

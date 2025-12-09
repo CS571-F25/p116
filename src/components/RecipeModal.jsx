@@ -13,9 +13,10 @@ export default function RecipeModal({
   if (!recipe) return null;
 
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered>
+    <Modal show={show} onHide={onHide} size="lg" centered aria-labelledby="recipe-modal-title">
       <Modal.Header closeButton>
         <Modal.Title
+          id="recipe-modal-title"
           style={{
             color: "var(--color-warm-brown)",
             fontWeight: 600,

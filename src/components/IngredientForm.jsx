@@ -19,10 +19,11 @@ export default function IngredientForm({
           <Card.Body className="p-4">
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label className="h6 mb-3">
+                <Form.Label htmlFor="ingredients-input" className="h6 mb-3">
                   What ingredients do you have?
                 </Form.Label>
                 <Form.Control
+                  id="ingredients-input"
                   as="textarea"
                   rows={4}
                   placeholder="e.g., tomato, beef, potato, onion, garlic..."
@@ -30,8 +31,9 @@ export default function IngredientForm({
                   onChange={(e) => setIngredients(e.target.value)}
                   disabled={loading}
                   style={{ fontSize: "16px", resize: "none" }}
+                  aria-describedby="ingredients-help"
                 />
-                <Form.Text className="text-muted mt-2 d-block">
+                <Form.Text id="ingredients-help" className="text-muted mt-2 d-block">
                   Separate multiple ingredients with commas
                 </Form.Text>
               </Form.Group>
@@ -54,17 +56,18 @@ export default function IngredientForm({
                 >
                   {!isAuthenticated ? (
                     <>
-                      <FaLock />
+                      <FaLock aria-hidden="true" />
                       Log In to Generate Recipes
                     </>
                   ) : loading ? (
                     <>
-                      <Spinner animation="border" size="sm" />
+                      <Spinner animation="border" size="sm" aria-hidden="true" />
+                      <span className="visually-hidden">Generating recipes, please wait</span>
                       Generating Recipes...
                     </>
                   ) : (
                     <>
-                      <FaWandMagicSparkles /> Generate Recipes
+                      <FaWandMagicSparkles aria-hidden="true" /> Generate Recipes
                     </>
                   )}
                 </Button>
