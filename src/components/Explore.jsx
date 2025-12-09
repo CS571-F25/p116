@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import RecipeCard from "./RecipeCard";
+import SearchBar from "./SearchBar";
 import { recipeAPI } from "../services/api";
+import { useDebounce } from "use-debounce";
 
 export default function Explore() {
   const [publicRecipes, setPublicRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery] = useDebounce(searchQuery, 300);
 
   useEffect(() => {
     loadPublicRecipes();
@@ -23,6 +27,19 @@ export default function Explore() {
       setLoading(false);
     }
   };
+
+  // Filter recipes based on debounced search query (frontend filter)
+  const filteredRecipes = publicRecipes.filter((recipe) => {
+    if (!debouncedQuery?.trim()) return true;
+
+    const query = debouncedQuery.trim().toLowerCase();
+    const matchesTitle = recipe.title.toLowerCase().includes(query);
+    const matchesDescription = recipe.description.toLowerCase().includes(query);
+    const matchesTags = recipe.tags.some((tag) =>
+      tag.toLowerCase().includes(query)
+    );
+    return matchesTitle || matchesDescription || matchesTags;
+  });
 
   if (loading) {
     return (
@@ -48,14 +65,26 @@ export default function Explore() {
         </Alert>
       )}
 
+      <SearchBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        placeholder="Search by title, description, or tags..."
+      />
+
       {publicRecipes.length > 0 ? (
-        <Row className="g-3">
-          {publicRecipes.map((recipe) => (
-            <Col key={recipe.id} xs={12} sm={6} md={6} lg={4}>
-              <RecipeCard recipe={recipe} showAction={false} />
-            </Col>
-          ))}
-        </Row>
+        filteredRecipes.length > 0 ? (
+          <Row className="g-3">
+            {filteredRecipes.map((recipe) => (
+              <Col key={recipe.id} xs={12} sm={6} md={6} lg={4}>
+                <RecipeCard recipe={recipe} showAction={false} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <div className="text-center text-muted">
+            <p>No recipes found matching "{debouncedQuery}"</p>
+          </div>
+        )
       ) : (
         <div className="text-center text-muted">
           <p>No recipes to explore yet.</p>

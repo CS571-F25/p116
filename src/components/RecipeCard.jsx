@@ -42,7 +42,6 @@ export default function RecipeCard({
   showAction = true,
   onSaveSuccess,
   onUnsaveSuccess,
-  showSavedByInfo,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [isSaved, setIsSaved] = useState(!!recipe.isSaved);
