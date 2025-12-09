@@ -37,17 +37,13 @@ export function TagList({ tags }) {
   );
 }
 
-export default function RecipeCard({
-  recipe,
-  showAction = true,
-  onSaveSuccess,
-  onUnsaveSuccess,
-}) {
+export default function RecipeCard({ recipe, onSaveSuccess, onUnsaveSuccess }) {
   const [showModal, setShowModal] = useState(false);
   const [isSaved, setIsSaved] = useState(!!recipe.isSaved);
   const [loading, setLoading] = useState(false);
   const { isAuthenticated } = useAuth();
   const { ToastComponent, showToast } = useToast();
+  const showAction = !!isAuthenticated;
 
   const handleSave = async (e) => {
     e.stopPropagation();

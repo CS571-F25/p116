@@ -1,8 +1,7 @@
 import { Navbar, Nav, Container, Button, NavDropdown } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
-import { HiOutlineLogout } from "react-icons/hi";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut as LogoutIcon } from "react-icons/fi";
 import "./Navigation.css";
 
 export default function Navigation() {
@@ -72,7 +71,7 @@ export default function Navigation() {
                     fontSize: "15px",
                   }}
                 >
-                  <FiLogOut /> Logout
+                  <LogoutIcon style={{ marginRight: 2 }} /> Logout
                 </NavDropdown.Item>
               </NavDropdown>
             )}

@@ -76,7 +76,7 @@ export default function Explore() {
           <Row className="g-3">
             {filteredRecipes.map((recipe) => (
               <Col key={recipe.id} xs={12} sm={6} md={6} lg={4}>
-                <RecipeCard recipe={recipe} showAction={false} />
+                <RecipeCard recipe={recipe} />
               </Col>
             ))}
           </Row>
