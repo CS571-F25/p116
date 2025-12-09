@@ -1,5 +1,10 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+const isLocalhost =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+const API_BASE_URL = isLocalhost
+  ? "http://localhost:3001/api" // Local development
+  : "https://recipe-app-backend-oeyz.onrender.com/api"; // Production (update this after deploying to Render)
 
 // Helper function to get auth token
 const getToken = () => {
