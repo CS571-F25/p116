@@ -5,19 +5,21 @@ import {
   getSavedRecipes,
   getRecipe,
   deleteRecipe,
-  getAllRecipes,
+  getPublicRecipes,
 } from "../controllers/recipeController.js";
-import { protect } from "../middleware/auth.js";
+import { protect, optionalAuth } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// All routes require authentication
+// Public routes (optional authentication to show isSaved status)
+router.get("/public/all", optionalAuth, getPublicRecipes);
+
+// Protected routes (require authentication)
 router.use(protect);
 
 router.post("/generate", generateRecipes);
 router.post("/save", saveRecipe);
 router.get("/saved", getSavedRecipes);
-router.get("/", getAllRecipes);
 router.get("/:id", getRecipe);
 router.delete("/:id", deleteRecipe);
 

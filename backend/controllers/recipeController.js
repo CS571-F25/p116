@@ -1,4 +1,5 @@
 import Recipe from "../models/Recipe.js";
+import UserRecipe from "../models/UserRecipe.js";
 import { generateRecipes as generateRecipesAI } from "../services/openaiService.js";
 
 /**
@@ -44,28 +45,37 @@ export const saveRecipe = async (req, res) => {
   try {
     const recipeData = req.body;
 
-    // Check if recipe already exists for this user
-    const existingRecipe = await Recipe.findOne({
-      userId: req.user.id,
+    // Check if recipe with this title already exists
+    let recipe = await Recipe.findOne({
       title: recipeData.title,
     });
 
-    if (existingRecipe) {
-      // Update to saved status
-      existingRecipe.isSaved = true;
-      await existingRecipe.save();
-
-      return res.json({
-        success: true,
-        data: existingRecipe,
+    // If recipe doesn't exist, create it
+    if (!recipe) {
+      recipe = await Recipe.create({
+        ...recipeData,
+        createdBy: req.user.id,
       });
     }
 
-    // Create new recipe
-    const recipe = await Recipe.create({
-      ...recipeData,
+    // Check if user already saved this recipe
+    const existingUserRecipe = await UserRecipe.findOne({
       userId: req.user.id,
-      isSaved: true,
+      recipeId: recipe._id,
+    });
+
+    if (existingUserRecipe) {
+      return res.json({
+        success: true,
+        data: recipe,
+        message: "Recipe already saved",
+      });
+    }
+
+    // Create the user-recipe relationship
+    await UserRecipe.create({
+      userId: req.user.id,
+      recipeId: recipe._id,
     });
 
     res.status(201).json({
@@ -86,10 +96,21 @@ export const saveRecipe = async (req, res) => {
  */
 export const getSavedRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find({
+    // Get all user-recipe relationships for this user
+    const userRecipes = await UserRecipe.find({
       userId: req.user.id,
-      isSaved: true,
-    }).sort({ createdAt: -1 });
+    })
+      .populate("recipeId")
+      .sort({ savedAt: -1 });
+
+    // Extract the recipes and add isSaved flag
+    const recipes = userRecipes
+      .map((ur) => ur.recipeId)
+      .filter((recipe) => recipe !== null)
+      .map((recipe) => ({
+        ...recipe.toJSON(),
+        isSaved: true,
+      }));
 
     res.json({
       success: true,
@@ -109,10 +130,21 @@ export const getSavedRecipes = async (req, res) => {
  */
 export const getRecipe = async (req, res) => {
   try {
-    const recipe = await Recipe.findOne({
-      _id: req.params.id,
+    // Check if user has saved this recipe
+    const userRecipe = await UserRecipe.findOne({
       userId: req.user.id,
+      recipeId: req.params.id,
     });
+
+    if (!userRecipe) {
+      return res.status(404).json({
+        success: false,
+        message: "Recipe not found",
+      });
+    }
+
+    // Get the recipe
+    const recipe = await Recipe.findById(req.params.id);
 
     if (!recipe) {
       return res.status(404).json({
@@ -134,26 +166,23 @@ export const getRecipe = async (req, res) => {
 };
 
 /**
- * Unsave/delete a recipe (soft delete)
+ * Unsave/delete a recipe (remove user-recipe relationship)
  * DELETE /api/recipes/:id
  */
 export const deleteRecipe = async (req, res) => {
   try {
-    const recipe = await Recipe.findOne({
-      _id: req.params.id,
+    // Delete the user-recipe relationship
+    const result = await UserRecipe.deleteOne({
       userId: req.user.id,
+      recipeId: req.params.id,
     });
 
-    if (!recipe) {
+    if (result.deletedCount === 0) {
       return res.status(404).json({
         success: false,
         message: "Recipe not found",
       });
     }
-
-    // Soft delete: set isSaved to false instead of deleting
-    recipe.isSaved = false;
-    await recipe.save();
 
     res.json({
       success: true,
@@ -169,18 +198,33 @@ export const deleteRecipe = async (req, res) => {
 };
 
 /**
- * Get all recipes (saved and generated history)
- * GET /api/recipes
+ * Get all public recipes (saved by any user)
+ * GET /api/recipes/public/all
+ * Optional authentication - if user is logged in, includes isSaved status
  */
-export const getAllRecipes = async (req, res) => {
+export const getPublicRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find({
-      userId: req.user.id,
-    }).sort({ createdAt: -1 });
+    // Get all recipes sorted by creation date
+    const recipes = await Recipe.find().sort({ createdAt: -1 });
+
+    // If user is authenticated, check which recipes they've saved
+    let userSavedRecipeIds = [];
+    if (req.user) {
+      const userRecipes = await UserRecipe.find({
+        userId: req.user.id,
+      }).select("recipeId");
+      userSavedRecipeIds = userRecipes.map((ur) => ur.recipeId.toString());
+    }
+
+    // Add isSaved field to each recipe
+    const recipesWithSavedStatus = recipes.map((recipe) => ({
+      ...recipe.toJSON(),
+      isSaved: userSavedRecipeIds.includes(recipe._id.toString()),
+    }));
 
     res.json({
       success: true,
-      data: recipes,
+      data: recipesWithSavedStatus,
     });
   } catch (error) {
     res.status(500).json({

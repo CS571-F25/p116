@@ -3,30 +3,25 @@ import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import RecipeCard from "./RecipeCard";
 import { recipeAPI } from "../services/api";
 
-export default function Saved() {
-  const [savedRecipes, setSavedRecipes] = useState([]);
+export default function Explore() {
+  const [publicRecipes, setPublicRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    loadSavedRecipes();
+    loadPublicRecipes();
   }, []);
 
-  const loadSavedRecipes = async () => {
+  const loadPublicRecipes = async () => {
     try {
       setLoading(true);
-      const recipes = await recipeAPI.getSavedRecipes();
-      setSavedRecipes(recipes);
+      const recipes = await recipeAPI.getPublicRecipes();
+      setPublicRecipes(recipes);
     } catch (err) {
-      setError(err.message || "Failed to load saved recipes");
+      setError(err.message || "Failed to load recipes");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleUnsaveSuccess = () => {
-    // Reload after removing
-    loadSavedRecipes();
   };
 
   if (loading) {
@@ -41,10 +36,9 @@ export default function Saved() {
 
   return (
     <Container fluid="lg" className="p-4">
-      {/* <h5 className="section-heading mb-4">My Saved Recipes</h5> */}
       <Row className="my-2 my-md-4 text-center">
         <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
-          Keep all your favorite recipes in one place
+          Discover recipes saved by our community
         </p>
       </Row>
 
@@ -54,20 +48,18 @@ export default function Saved() {
         </Alert>
       )}
 
-      {savedRecipes.length > 0 ? (
+      {publicRecipes.length > 0 ? (
         <Row className="g-3">
-          {savedRecipes.map((recipe) => (
+          {publicRecipes.map((recipe) => (
             <Col key={recipe.id} xs={12} sm={6} md={6} lg={4}>
-              <RecipeCard
-                recipe={recipe}
-                onUnsaveSuccess={handleUnsaveSuccess}
-              />
+              <RecipeCard recipe={recipe} showSavedByInfo={true} />
             </Col>
           ))}
         </Row>
       ) : (
         <div className="text-center text-muted">
-          <p>No saved recipes.</p>
+          <p>No recipes to explore yet.</p>
+          <p>Be the first to save a recipe!</p>
         </div>
       )}
     </Container>

@@ -109,7 +109,7 @@ body {
 }
 
 .alert-danger {
-  background-color: #fff5f5;
+  /* background-color: #fff5f5; */
   color: var(--color-warm-red);
 }
 

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const recipeSchema = new mongoose.Schema(
   {
-    userId: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -53,10 +53,6 @@ const recipeSchema = new mongoose.Schema(
         type: String,
       },
     ],
-    isSaved: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,
@@ -65,7 +61,6 @@ const recipeSchema = new mongoose.Schema(
         ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
-        delete ret.userId;
         return ret;
       },
     },
@@ -73,8 +68,8 @@ const recipeSchema = new mongoose.Schema(
 );
 
 // Index for faster queries
-recipeSchema.index({ userId: 1, createdAt: -1 });
-recipeSchema.index({ userId: 1, isSaved: 1 });
+recipeSchema.index({ title: 1 });
+recipeSchema.index({ createdBy: 1, createdAt: -1 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);
 

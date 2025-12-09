@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import About from "./components/About";
+import Explore from "./components/Explore";
 import Saved from "./components/MyRecipes";
 import Preference from "./components/Preference";
 import Login from "./components/Login";
@@ -39,6 +40,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
             <Route
               path="/favorites"
               element={

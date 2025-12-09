@@ -103,8 +103,9 @@ export const recipeAPI = {
     return data.data;
   },
 
-  async getAllRecipes() {
-    const data = await makeRequest("/recipes");
+  async getPublicRecipes() {
+    // Public endpoint - no auth required
+    const data = await makeRequest("/recipes/public/all");
     return data.data;
   },
 
