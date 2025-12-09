@@ -54,7 +54,7 @@ export default function Home() {
   const handleBackToIngredients = () => {
     setCurrentStep("ingredients");
     setRecipes([]);
-    // setIngredients("");
+    setIngredients("");
   };
 
   return (

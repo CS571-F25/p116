@@ -2,6 +2,14 @@ import { Navbar, Nav, Container, Button, NavDropdown } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { FiLogOut as LogoutIcon } from "react-icons/fi";
+import {
+  HiOutlineHome,
+  HiOutlineGlobeAlt,
+  HiOutlineCube,
+  HiOutlineUserCircle,
+  HiOutlineViewGrid,
+  HiOutlineInformationCircle,
+} from "react-icons/hi";
 import "./Navigation.css";
 
 export default function Navigation() {
@@ -10,11 +18,31 @@ export default function Navigation() {
   const { isAuthenticated, user, logout } = useAuth();
 
   const navItems = [
-    { path: "/", label: "Home", visible: true },
-    { path: "/explore", label: "Explore", visible: true },
-    { path: "/favorites", label: "My Recipes", visible: !!isAuthenticated },
-    { path: "/preferences", label: "Preferences", visible: !!isAuthenticated },
-    { path: "/about", label: "About", visible: true },
+    { path: "/", label: "Home", visible: true, icon: <HiOutlineHome /> },
+    {
+      path: "/explore",
+      label: "Explore",
+      visible: true,
+      icon: <HiOutlineGlobeAlt />,
+    },
+    {
+      path: "/favorites",
+      label: "My Recipes",
+      visible: !!isAuthenticated,
+      icon: <HiOutlineCube />,
+    },
+    {
+      path: "/preferences",
+      label: "Preferences",
+      visible: !!isAuthenticated,
+      icon: <HiOutlineViewGrid />,
+    },
+    {
+      path: "/about",
+      label: "About",
+      visible: true,
+      icon: <HiOutlineInformationCircle />,
+    },
     { path: "/login", label: "Login", visible: !isAuthenticated },
   ];
 
@@ -35,24 +63,32 @@ export default function Navigation() {
           <Nav className="ms-auto">
             {navItems
               .filter((item) => !!item.visible)
-              .map((item) => (
-                <Nav.Link
-                  key={item.path}
-                  as={Link}
-                  to={item.path}
-                  className={
-                    location.pathname === item.path ||
-                    (item.path === "/" && location.pathname === "")
-                      ? "active"
-                      : ""
-                  }
-                >
-                  {item.label}
-                </Nav.Link>
-              ))}
+              .map((item) => {
+                const isActive =
+                  location.pathname === item.path ||
+                  (item.path === "/" && location.pathname === "");
+                return (
+                  <Nav.Link
+                    key={item.path}
+                    as={Link}
+                    to={item.path}
+                    className={`${isActive ? "active" : ""}`}
+                  >
+                    {item.icon && <span className="nav-icon">{item.icon}</span>}
+                    <span>{item.label}</span>
+                  </Nav.Link>
+                );
+              })}
             {isAuthenticated && (
               <NavDropdown
-                title={user?.name || "User"}
+                title={
+                  <>
+                    <span className="nav-icon">
+                      <HiOutlineUserCircle />
+                    </span>{" "}
+                    {user?.name || "User"}
+                  </>
+                }
                 id="user-profile-dropdown"
                 align="end"
               >
