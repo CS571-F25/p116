@@ -89,10 +89,10 @@ export const authAPI = {
 
 // Recipe API
 export const recipeAPI = {
-  async generateRecipes(ingredients, preferences) {
+  async generateRecipes(ingredients) {
     const data = await makeRequest("/recipes/generate", {
       method: "POST",
-      body: JSON.stringify({ ingredients, preferences }),
+      body: JSON.stringify({ ingredients }),
     });
 
     return data.data; // Return the recipes array

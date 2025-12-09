@@ -10,7 +10,7 @@ export default function Explore() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedQuery] = useDebounce(searchQuery, 300);
+  const [debouncedQuery] = useDebounce(searchQuery, 250);
 
   useEffect(() => {
     loadPublicRecipes();

@@ -1,5 +1,6 @@
 import Recipe from "../models/Recipe.js";
 import UserRecipe from "../models/UserRecipe.js";
+import User from "../models/User.js";
 import { generateRecipes as generateRecipesAI } from "../services/openaiService.js";
 
 /**
@@ -8,7 +9,7 @@ import { generateRecipes as generateRecipesAI } from "../services/openaiService.
  */
 export const generateRecipes = async (req, res) => {
   try {
-    const { ingredients, preferences } = req.body;
+    const { ingredients } = req.body;
 
     if (
       !ingredients ||
@@ -21,8 +22,12 @@ export const generateRecipes = async (req, res) => {
       });
     }
 
+    // Get user's preferences from database
+    const user = await User.findById(req.user.id).select("preferences");
+    const preferences = user?.preferences || {};
+
     // Generate recipes using OpenAI
-    const recipes = await generateRecipesAI(ingredients, preferences || {});
+    const recipes = await generateRecipesAI(ingredients, preferences);
 
     res.json({
       success: true,

@@ -30,16 +30,10 @@ export default function Home() {
     try {
       // Import the API service
       const { recipeAPI } = await import("../services/api.js");
-      const { getUserPreferences } = await import("../utils/preferences.js");
-
-      // Get user preferences for better recipe recommendations
-      const preferences = getUserPreferences();
 
       // Generate recipes using the backend API
-      const generatedRecipes = await recipeAPI.generateRecipes(
-        ingredients,
-        preferences
-      );
+      // User preferences are automatically fetched from the database
+      const generatedRecipes = await recipeAPI.generateRecipes(ingredients);
 
       setRecipes(generatedRecipes);
       setCurrentStep("recipes");
