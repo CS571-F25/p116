@@ -16,11 +16,12 @@ import {
 } from "../utils/preferences";
 import { preferencesAPI } from "../services/api";
 import FilterGroup from "./FilterGroup";
+import { useToast } from "../hooks/useToast";
 
 export default function Preference() {
-  const [preferences, setPreferences] = useState(getUserPreferences);
-  const [saveStatus, setSaveStatus] = useState(null); // 'success' or 'error'
+  const [preferences, setPreferences] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { ToastComponent, showToast } = useToast();
 
   useEffect(() => {
     loadPreferences();
@@ -43,7 +44,6 @@ export default function Preference() {
   };
 
   const handleCheckboxChange = (category, value) => {
-    setSaveStatus(null);
     setPreferences((prev) => {
       const currentArray = prev[category] || [];
       const isSelected = currentArray.includes(value);
@@ -61,10 +61,10 @@ export default function Preference() {
     try {
       await preferencesAPI.updatePreferences(preferences);
       saveUserPreferences(preferences); // Also save to localStorage
-      setSaveStatus("success");
+      showToast("Preferences saved successfully!");
     } catch (err) {
       console.error("Error saving preferences:", err);
-      setSaveStatus("error");
+      showToast("Error saving preferences. Please try again.", "warning");
     }
   };
 
@@ -73,10 +73,10 @@ export default function Preference() {
       const defaultPrefs = await preferencesAPI.resetPreferences();
       setPreferences(defaultPrefs);
       saveUserPreferences(defaultPrefs); // Also save to localStorage
-      setSaveStatus("success");
+      showToast("Preferences reset successfully!");
     } catch (err) {
       console.error("Error resetting preferences:", err);
-      setSaveStatus("error");
+      showToast("Error resetting preferences. Please try again.", "warning");
     }
   };
 
@@ -92,6 +92,7 @@ export default function Preference() {
 
   return (
     <Container className="p-4 w-responsive-75">
+      <ToastComponent />
       {/* <h5 className="section-heading mb-4">Preferences</h5> */}
       <Row className="my-2 my-md-4 text-center">
         <p className="lead" style={{ color: "var(--color-warm-brown)" }}>
@@ -123,17 +124,6 @@ export default function Preference() {
               Save Preferences
             </Button>
           </div>
-
-          {saveStatus === "success" && (
-            <Alert variant="success" className="mt-4">
-              Preferences saved successfully!
-            </Alert>
-          )}
-          {saveStatus === "error" && (
-            <Alert variant="danger" className="mt-4">
-              Error saving preferences. Please try again.
-            </Alert>
-          )}
         </Card.Body>
       </Card>
     </Container>
