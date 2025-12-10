@@ -1,6 +1,63 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 
 export default function About() {
+  const features = [
+    {
+      title: "Recipe Generation",
+      description: "AI-powered recipe suggestions based on your ingredients",
+    },
+    {
+      title: "Recipe Details",
+      description:
+        "View ingredient lists, step-by-step instructions, and cooking tips",
+    },
+    {
+      title: "Save Recipes",
+      description:
+        'Users can save or remove favorite recipes to their personal "My Recipes" page',
+    },
+    {
+      title: "Preference Settings",
+      description:
+        "Filter by cooking complexity, cuisine style, dietary restrictions, and more",
+    },
+    {
+      title: "Community Recipes",
+      description:
+        "Browse and search through recipes saved by other users in the community",
+    },
+  ];
+
+  const techStack = [
+    {
+      title: "React & React Router",
+      description: "Frontend development and navigation",
+    },
+    {
+      title: "React Bootstrap",
+      description: "Responsive and consistent UI",
+    },
+    {
+      title: "Vite",
+      description: "Fast development and building",
+    },
+    {
+      title: "Node.js & Express",
+      description: "RESTful API for backend",
+    },
+    {
+      title: "MongoDB",
+      description: "Data persistence for users and recipes",
+    },
+    {
+      title: "OpenAI API",
+      description: "AI-powered recipe generation",
+    },
+  ];
+
+  const listItemStyle = { lineHeight: "1.7" };
+  const textStyle = { color: "var(--color-warm-brown)" };
+
   return (
     <Container className="mt-5">
       <Row>
@@ -28,11 +85,11 @@ export default function About() {
                   color: "var(--color-warm-brown)",
                 }}
               >
-                Tired of staring at your fridge wondering what to make?
-                SmartRecipe is your AI-powered cooking companion that turns
-                those random ingredients in your kitchen into delicious meal
-                ideas! Just tell us what you have, and we'll instantly whip up
-                personalized recipe suggestions tailored to your taste buds.
+                SmartRecipe is an AI-powered web application that helps users
+                decide what to cook using the available ingredients. By entering
+                a few ingredients, users can instantly generate personalized
+                recipes, view nutritional details, and explore different cooking
+                styles and dietary preferences.
               </Card.Text>
               <Card.Text
                 style={{
@@ -41,12 +98,11 @@ export default function About() {
                   color: "var(--color-warm-brown)",
                 }}
               >
-                Got a tomato, some beef, and a potato? We might suggest a cozy
-                Beef Stew with Tomatoes or a flavorful Spiced Beef and Potato
-                Hash! Whether you're a busy student trying to make the most of
-                your groceries or a professional short on time, SmartRecipe
-                helps you answer that age-old question: "What should I cook
-                today?"
+                For example, if a user inputs "tomato," "beef," and "potato", AI
+                may suggest recipes such as Beef Stew with Tomatoes or Spiced
+                Beef and Potato Hash. The goal is to make cooking more
+                accessible, creative, and efficient, especially for students and
+                busy professionals who often wonder "What should I cook today?"
               </Card.Text>
             </Card.Body>
           </Card>
@@ -63,39 +119,16 @@ export default function About() {
                     ✨ Features
                   </Card.Title>
                   <ul className="mb-0" style={{ paddingLeft: "1.25rem" }}>
-                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Recipe Generation:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        AI-powered recipe suggestions based on your ingredients
-                      </span>
-                    </li>
-                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Recipe Details:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        View ingredient lists, step-by-step instructions, and
-                        nutrition facts
-                      </span>
-                    </li>
-                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Save Recipes:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        Keep all your favorite recipes in one place
-                      </span>
-                    </li>
-                    <li style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Preference Mode:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        Filter by dietary restrictions, cuisine style, and more
-                      </span>
-                    </li>
+                    {features.map((feature, index) => (
+                      <li
+                        key={index}
+                        className={index < features.length - 1 ? "mb-3" : ""}
+                        style={listItemStyle}
+                      >
+                        <strong style={textStyle}>{feature.title}: </strong>
+                        <span style={textStyle}>{feature.description}</span>
+                      </li>
+                    ))}
                   </ul>
                 </Card.Body>
               </Card>
@@ -112,30 +145,16 @@ export default function About() {
                     🛠️ Tech Stack
                   </Card.Title>
                   <ul className="mb-0" style={{ paddingLeft: "1.25rem" }}>
-                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        Frontend:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        React, React Router, Vite
-                      </span>
-                    </li>
-                    <li className="mb-3" style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        UI library:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        React Bootstrap
-                      </span>
-                    </li>
-                    <li style={{ lineHeight: "1.7" }}>
-                      <strong style={{ color: "var(--color-warm-brown)" }}>
-                        AI:
-                      </strong>{" "}
-                      <span style={{ color: "var(--color-warm-brown)" }}>
-                        OpenAI API for recipe generation
-                      </span>
-                    </li>
+                    {techStack.map((tech, index) => (
+                      <li
+                        key={index}
+                        className={index < techStack.length - 1 ? "mb-3" : ""}
+                        style={listItemStyle}
+                      >
+                        <strong style={textStyle}>{tech.title}: </strong>
+                        <span style={textStyle}>{tech.description}</span>
+                      </li>
+                    ))}
                   </ul>
                 </Card.Body>
               </Card>

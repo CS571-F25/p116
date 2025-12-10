@@ -59,17 +59,17 @@ export default function Explore() {
         </p>
       </Row>
 
-      {error && (
-        <Alert variant="danger" className="mb-3">
-          {error}
-        </Alert>
-      )}
-
       <SearchBar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         placeholder="Search by title, description, or tags..."
       />
+
+      {error && (
+        <Alert variant="danger" className="mb-3 w-50 mx-auto">
+          {error}
+        </Alert>
+      )}
 
       {publicRecipes.length > 0 ? (
         filteredRecipes.length > 0 ? (
