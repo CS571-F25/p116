@@ -9,6 +9,7 @@ import {
   HiOutlineUserCircle,
   HiOutlineViewGrid,
   HiOutlineInformationCircle,
+  HiOutlineUser,
 } from "react-icons/hi";
 import "./Navigation.css";
 
@@ -48,7 +49,12 @@ export default function Navigation() {
       visible: true,
       icon: <HiOutlineInformationCircle aria-hidden="true" />,
     },
-    { path: "/login", label: "Login", visible: !isAuthenticated },
+    {
+      path: "/login",
+      label: "Login",
+      visible: !isAuthenticated,
+      icon: <HiOutlineUser aria-hidden="true" />,
+    },
   ];
 
   const handleLogout = () => {
