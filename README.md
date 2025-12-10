@@ -4,14 +4,23 @@ SmartRecipe is an AI-powered web application that helps users decide what to coo
 
 ## ✨ Features
 
-- **Recipe Generation:** Users input their available ingredients, and AI generates three recipe options displayed as interactive cards. Each card features a title, image, brief description, preparation time, difficulty level, calorie count, and relevant dietary tags.
-- **Recipe Details:** By clicking the recipe card, users can view recipe details including ingredient lists, step-by-step instructions, nutrition facts, and helpful cooking tips.
-- **Save/Favorite Recipes:** Users can save or remove favorite recipes to their personal “Saved Recipes” page and search or filter through their collection.
-- **Preference Modes:** Users can filter recipes by dietary restriction (e.g., vegan, gluten-free), cuisine style (e.g., Asian, Italian), meal type, cooking complexity, and spice level to match their specific needs.
+- **User Authentication:** User registration and login system with JWT-based authentication
+- **AI Recipe Generation:** Users input their available ingredients, and AI generates three personalized recipe options displayed as interactive cards. Each card features a title, description, preparation time, difficulty level, calorie count, and relevant dietary tags
+- **Recipe Details:** By clicking the recipe card, users can view complete recipe details including ingredient lists, step-by-step instructions, nutrition facts, and helpful cooking tips
+- **Save Recipes:** Users can save or remove favorite recipes to their personal "My Recipes" page
+- **User Preferences:** Customizable preferences for dietary restrictions (e.g., vegan, gluten-free), cuisine style (e.g., Asian, Italian), meal type, cooking complexity, and spice level. Preferences are automatically applied to recipe generation
+- **Explore Community Recipes:** Browse and search through recipes saved by other users in the community
 
 ## 🛠️ Tech Stack
 
+### Frontend
+
 - **React** and **React Router** for frontend development and navigation
 - **React Bootstrap** for responsive and accessible UI
-- **OpenAI API** for recipe generation and image recognition
-- **localStorage** for persisting user preferences and saved recipes, with the option for fullstack development with an external database (e.g. Node.js and MongoDB) if time permits.
+- **Vite** for fast development and building
+
+### Backend
+
+- **Node.js** with **Express** for RESTful API
+- **MongoDB** for data persistence
+- **OpenAI API** for AI-powered recipe generation
