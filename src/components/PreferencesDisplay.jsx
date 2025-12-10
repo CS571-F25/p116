@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { Accordion } from "react-bootstrap";
 import { Link } from "react-router";
-import { getUserPreferences, preferenceCategories } from "../utils/preferences";
+import { preferenceCategories } from "../utils/preferences";
 import { HiOutlineExternalLink as EditIcon } from "react-icons/hi";
+import { preferencesAPI } from "../services/api";
 
 export default function PreferencesDisplay() {
   const [preferences, setPreferences] = useState(null);
 
   useEffect(() => {
-    const prefs = getUserPreferences();
-    setPreferences(prefs);
+    loadPreferences();
   }, []);
+
+  const loadPreferences = async () => {
+    const prefs = await preferencesAPI.getPreferences();
+    setPreferences(prefs);
+  };
 
   if (!preferences) return null;
 
