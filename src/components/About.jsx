@@ -160,6 +160,31 @@ export default function About() {
               </Card>
             </Col>
           </Row>
+
+          <div className="text-center mt-4 mb-4">
+            <div
+              className="mb-2"
+              style={{ color: "var(--color-warm-brown)", fontSize: "1rem" }}
+            >
+              Made with 🧡 by Handan Hu
+            </div>
+            <a
+              href="https://github.com/CS571-F25/p116"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "var(--color-primary)",
+                textDecoration: "none",
+                marginLeft: "5px",
+              }}
+              onMouseEnter={(e) =>
+                (e.target.style.textDecoration = "underline")
+              }
+              onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+            >
+              GitHub
+            </a>
+          </div>
         </Col>
       </Row>
     </Container>
