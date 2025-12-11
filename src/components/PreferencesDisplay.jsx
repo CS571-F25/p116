@@ -6,7 +6,7 @@ import { HiOutlineExternalLink as EditIcon } from "react-icons/hi";
 import { preferencesAPI } from "../services/api";
 
 export default function PreferencesDisplay() {
-  const [preferences, setPreferences] = useState(null);
+  const [preferences, setPreferences] = useState({});
 
   useEffect(() => {
     loadPreferences();
@@ -17,9 +17,7 @@ export default function PreferencesDisplay() {
     setPreferences(prefs);
   };
 
-  if (!preferences) return null;
-
-  const hasPreferences = Object.values(preferences).some(
+  const hasPreferences = Object.values(preferences || {}).some(
     (arr) => arr.length > 0
   );
 
