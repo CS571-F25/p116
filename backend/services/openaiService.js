@@ -1,4 +1,6 @@
 import OpenAI from "openai";
+import { zodTextFormat } from "openai/helpers/zod";
+import { z } from "zod";
 import { randomUUID } from "crypto";
 
 let openaiClent;
@@ -13,48 +15,59 @@ function getClient() {
   return openaiClent;
 }
 
+// Zod schema for recipe structure
+const RecipeSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  prepTime: z.string(),
+  difficulty: z.enum(["Easy", "Medium", "Hard"]),
+  calories: z.string(),
+  tags: z.array(z.string()),
+  ingredients: z.array(z.string()),
+  instructions: z.array(z.string()),
+  tips: z.array(z.string()),
+});
+
+// Schema for the response containing recipes array
+const RecipesResponseSchema = z.object({
+  recipes: z.array(RecipeSchema).length(3),
+});
+
 /**
  * Generate recipes based on ingredients and user preferences
  */
 export const generateRecipes = async (ingredients, preferences = {}) => {
   try {
     const openaiClient = getClient();
-
-    // Build the prompt based on ingredients and preferences
     const prompt = buildPrompt(ingredients, preferences);
 
-    const completion = await openaiClient.chat.completions.create({
-      model: "gpt-4o-mini", // or "gpt-4" for better results
-      messages: [
+    // Use Responses API with gpt-5-mini and structured output using Zod
+    const response = await openaiClient.responses.parse({
+      model: "gpt-5-nano",
+      input: [
         {
           role: "system",
           content:
-            "You are a professional chef and recipe creator. Generate detailed, practical recipes based on the ingredients provided. Return the response as a valid JSON array containing exactly 3 recipe objects. Each recipe object must have: title (string), description (string), prepTime (string like '30 min'), difficulty (string: 'Easy', 'Medium', or 'Hard'), calories (string like '420'), tags (array of strings), ingredients (array of strings with quantities), instructions (array of strings, step by step), and tips (array of helpful cooking tips).",
+            "You are a professional chef and recipe creator. Generate detailed, practical recipes based on the ingredients provided. Return exactly 3 recipe objects. Each recipe must have: title, description, prepTime (e.g. '30 min'), difficulty ('Easy', 'Medium', or 'Hard'), calories (e.g. '350'), tags (array), ingredients (array with quantities), instructions (array, step by step), and tips (array).",
         },
         {
           role: "user",
           content: prompt,
         },
       ],
-      temperature: 0.8,
-      max_tokens: 3000,
-      response_format: { type: "json_object" },
+      reasoning: { effort: "minimal" },
+      max_output_tokens: 3000,
+      text: {
+        format: zodTextFormat(RecipesResponseSchema, "recipes"),
+      },
     });
 
-    const content = completion.choices[0].message.content;
-    const parsedResponse = JSON.parse(content);
+    // Access the parsed and validated output directly
+    const parsedResponse = response.output_parsed;
 
-    // Handle both direct array and object with recipes property
-    let recipes = Array.isArray(parsedResponse)
-      ? parsedResponse
-      : parsedResponse.recipes;
-
-    if (!recipes || !Array.isArray(recipes)) {
-      throw new Error("Invalid response format from OpenAI");
-    }
-
-    // Ensure we have exactly 3 recipes and add UUIDs
-    recipes = recipes.slice(0, 3).map((recipe) => ({
+    // Extract recipes from the validated response and add UUIDs
+    // Schema already ensures exactly 3 recipes, so no need to slice
+    const recipes = parsedResponse.recipes.map((recipe) => ({
       ...recipe,
       id: randomUUID(),
       generatedFrom: ingredients.split(",").map((i) => i.trim()),
